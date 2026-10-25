@@ -18,11 +18,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Rate Our Service | Vampire Food Services</title>
-    <link rel="icon" href="favicon.svg?v=14" type="image/svg+xml" />
-    <link rel="manifest" href="manifest.webmanifest?v=14" />
-    <link rel="stylesheet" href="styles.css?v=14" />
-    <link rel="stylesheet" href="landscape.css?v=14" />
-    <script src="app.js?v=14" defer></script>
+    <link rel="icon" href="favicon.svg?v=15" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest?v=15" />
+    <link rel="stylesheet" href="styles.css?v=15" />
+    <link rel="stylesheet" href="landscape.css?v=15" />
+    <script src="app.js?v=15" defer></script>
   </head>
   <body>
     <div class="ambient ambient--one" aria-hidden="true"></div>
@@ -58,7 +58,12 @@
             </div>
 
             <blockquote class="privacy-joke">
-              <span class="privacy-joke__mark" aria-hidden="true">!</span>
+              <span class="privacy-joke__mark" aria-hidden="true">
+                <svg viewBox="0 0 64 64" focusable="false">
+                  <path d="M32 3C27 15 12 29 12 43a20 20 0 0 0 40 0C52 29 37 15 32 3Z" />
+                  <path class="privacy-joke__shine" d="M22 36c-2 4-3 8-2 11" />
+                </svg>
+              </span>
               <p>
                 <strong>Your opinion matters</strong>
                 <span>All ratings are anonymous. <em>Blood type is not.</em></span>
@@ -117,16 +122,10 @@
           </section>
         </div>
 
-        <footer class="kiosk-footer">
-          <p>
-            <span class="status-dot" aria-hidden="true"></span>
-            Night shift online until sunrise
-          </p>
-        </footer>
       </section>
     </main>
 
-    <div class="bat-swarm" id="bat-swarm" aria-hidden="true"></div>
+    <div class="rating-reactions" id="rating-reactions" aria-hidden="true"></div>
 
     <div class="garlic-alert" id="garlic-alert" role="dialog" aria-modal="true" aria-labelledby="garlic-title" hidden>
       <div class="garlic-alert__card">
