@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A delightfully spooky service rating kiosk for Vampire Food Services."
+    />
+    <meta name="theme-color" content="#240f21" />
+    <title>Rate Our Service | Vampire Food Services</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient--one" aria-hidden="true"></div>
+    <div class="ambient ambient--two" aria-hidden="true"></div>
+
+    <main class="kiosk-shell">
+      <section class="rating-card" aria-labelledby="page-title">
+        <header class="kiosk-header">
+          <div class="brand">
+            <span class="brand__mark" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img">
+                <path d="M16 7h32v19c0 17-8.6 26.5-16 31-7.4-4.5-16-14-16-31V7Z" />
+                <path class="brand__fang" d="M22 19h8l-4 13-4-13Zm12 0h8l-4 13-4-13Z" />
+              </svg>
+            </span>
+            <span>
+              <strong>Vampire Food Services</strong>
+              <small>Quality necks. Fang-tastic care.</small>
+            </span>
+          </div>
+
+          <div class="ticket" aria-label="Now serving">
+            <span>Now serving</span>
+            <strong id="victim-number">V-013</strong>
+          </div>
+        </header>
+
+        <div class="intro">
+          <p class="eyebrow">A quick bite of feedback</p>
+          <h1 id="page-title">Please rate our service today</h1>
+          <p class="intro__copy">How was your experience? Tap the face that says it best.</p>
+        </div>
+
+        <div class="ratings" role="group" aria-label="Choose a service rating">
+          <button class="rating rating--awful" type="button" data-rating="awful" aria-label="Terrible">
+            <span class="face" aria-hidden="true">
+              <span class="face__eyes"></span>
+              <span class="face__mouth face__mouth--sad"></span>
+            </span>
+            <span class="rating__label">Terrible</span>
+          </button>
+
+          <button class="rating rating--meh" type="button" data-rating="meh" aria-label="Could be better">
+            <span class="face" aria-hidden="true">
+              <span class="face__eyes"></span>
+              <span class="face__mouth face__mouth--flat"></span>
+            </span>
+            <span class="rating__label">Could be better</span>
+          </button>
+
+          <button class="rating rating--good" type="button" data-rating="good" aria-label="Pretty good">
+            <span class="face" aria-hidden="true">
+              <span class="face__eyes"></span>
+              <span class="face__mouth face__mouth--smile"></span>
+            </span>
+            <span class="rating__label">Pretty good</span>
+          </button>
+
+          <button class="rating rating--great" type="button" data-rating="great" aria-label="Fang-tastic">
+            <span class="face" aria-hidden="true">
+              <span class="face__eyes"></span>
+              <span class="face__mouth face__mouth--grin"></span>
+            </span>
+            <span class="rating__label">Fang-tastic</span>
+          </button>
+        </div>
+
+        <div class="feedback" id="feedback" aria-live="polite">
+          <span class="feedback__icon" aria-hidden="true">✦</span>
+          <div>
+            <strong id="feedback-title">Your opinion matters</strong>
+            <p id="feedback-copy">All ratings are anonymous. Blood type is not.</p>
+          </div>
+          <button class="again-button" id="rate-again" type="button" hidden>Rate again</button>
+        </div>
+
+        <footer class="kiosk-footer">
+          <p>
+            <span class="status-dot" aria-hidden="true"></span>
+            Night shift online until sunrise
+          </p>
+          <button class="garlic-button" id="garlic-button" type="button">
+            <span aria-hidden="true">🧄</span>
+            Emergency garlic
+          </button>
+        </footer>
+      </section>
+
+      <p class="fine-print">Serving the recently bitten since 1431 · Definitely-not-real ISO 666 certified</p>
+    </main>
+
+    <div class="bat-swarm" id="bat-swarm" aria-hidden="true"></div>
+
+    <div class="garlic-alert" id="garlic-alert" role="dialog" aria-modal="true" aria-labelledby="garlic-title" hidden>
+      <div class="garlic-alert__card">
+        <span class="garlic-alert__icon" aria-hidden="true">🧄</span>
+        <p class="eyebrow">Protection mode activated</p>
+        <h2 id="garlic-title">Service temporarily unavailable</h2>
+        <p>The entire night shift has fled the premises.</p>
+        <button id="dismiss-garlic" type="button">It’s safe now</button>
+      </div>
+    </div>
+  </body>
+</html>
