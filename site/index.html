@@ -9,20 +9,17 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <meta
-      name="description"
-      content="A delightfully spooky service rating kiosk for Vampire Food Services."
-    />
+    <meta name="description" content="A delightfully spooky service rating kiosk for Snacks for Vampires." />
     <meta name="theme-color" content="#3a0f23" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Rate Our Service | Vampire Food Services</title>
-    <link rel="icon" href="favicon.svg?v=15" type="image/svg+xml" />
-    <link rel="manifest" href="manifest.webmanifest?v=15" />
-    <link rel="stylesheet" href="styles.css?v=15" />
-    <link rel="stylesheet" href="landscape.css?v=15" />
-    <script src="app.js?v=15" defer></script>
+    <title>Rate Our Service | Snacks for Vampires</title>
+    <link rel="icon" href="favicon.svg?v=17" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest?v=17" />
+    <link rel="stylesheet" href="styles.css?v=17" />
+    <link rel="stylesheet" href="kiosk.css?v=17" />
+    <script src="app.js?v=17" defer></script>
   </head>
   <body>
     <div class="ambient ambient--one" aria-hidden="true"></div>
@@ -34,57 +31,29 @@
           <div class="brand">
             <span class="brand__mark" aria-hidden="true">
               <svg viewBox="0 0 64 64" role="img">
-                <path d="M16 7h32v19c0 17-8.6 26.5-16 31-7.4-4.5-16-14-16-31V7Z" />
-                <path class="brand__fang" d="M22 19h8l-4 13-4-13Zm12 0h8l-4 13-4-13Z" />
+                <path d="M10 9h44v21c0 17-10.5 26-22 30C20.5 56 10 47 10 30V9Z" />
+                <path class="brand__fang" d="M17 19h13l-6.5 19L17 19Zm17 0h13l-6.5 19L34 19Z" />
               </svg>
             </span>
-            <span>
-              <strong>Vampire Food Services</strong>
-              <small>Quality necks. Fang-tastic care since 1431.</small>
-            </span>
+            <strong>Snacks for Vampires</strong>
           </div>
 
-          <div class="ticket" aria-label="Now serving">
-            <span id="ticket-caption">Now serving</span>
-            <strong id="victim-number">V-001</strong>
+          <div class="header-actions">
+            <div class="ticket" aria-label="Now serving">
+              <span id="ticket-caption">Now serving</span>
+              <strong id="victim-number">V-001</strong>
+            </div>
+            <button class="menu-button" id="menu-button" type="button" aria-haspopup="dialog">
+              <span aria-hidden="true">☰</span>
+              <strong>Menu</strong>
+            </button>
           </div>
         </header>
 
         <div class="kiosk-content">
-          <section class="intro" aria-label="Service rating introduction">
-            <div class="intro__heading">
-              <p class="eyebrow">A quick bite of feed-back</p>
-              <h1 id="page-title">Please rate our service today</h1>
-            </div>
-
-            <blockquote class="privacy-joke">
-              <span class="privacy-joke__mark" aria-hidden="true">
-                <svg viewBox="0 0 64 64" focusable="false">
-                  <path d="M32 3C27 15 12 29 12 43a20 20 0 0 0 40 0C52 29 37 15 32 3Z" />
-                  <path class="privacy-joke__shine" d="M22 36c-2 4-3 8-2 11" />
-                </svg>
-              </span>
-              <p>
-                <strong>Your opinion matters</strong>
-                <span>All ratings are anonymous. <em>Blood type is not.</em></span>
-              </p>
-            </blockquote>
-
-            <button class="safety-button" id="garlic-button" type="button">
-              <span class="safety-button__icon" aria-hidden="true">&#129476;</span>
-              <span>
-                <strong>Bite escape</strong>
-                <small>Tap to take this neck off tonight&rsquo;s menu</small>
-              </span>
-            </button>
-          </section>
+          <h1 id="page-title">How fang-tastic was the service?</h1>
 
           <section class="rating-zone" aria-label="Rate the service">
-            <div class="rating-zone__heading">
-              <span>Choose one</span>
-              <strong>How fang-tastic was the service?</strong>
-            </div>
-
             <div class="ratings" role="group" aria-label="Choose a service rating">
               <button class="rating rating--awful" type="button" data-rating="awful" aria-label="Terrible">
                 <span class="face" aria-hidden="true">
@@ -127,15 +96,91 @@
 
     <div class="rating-reactions" id="rating-reactions" aria-hidden="true"></div>
 
-    <div class="garlic-alert" id="garlic-alert" role="dialog" aria-modal="true" aria-labelledby="garlic-title" hidden>
-      <div class="garlic-alert__card">
-        <span class="garlic-alert__icon" aria-hidden="true">&#129476;</span>
-        <div>
-          <p class="eyebrow">Human safety protocol activated</p>
-          <h2 id="garlic-title">Bite officially cancelled.</h2>
-          <button id="dismiss-garlic" type="button">Return to kiosk</button>
+    <div class="menu-modal" id="menu-modal" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden>
+      <section class="menu-dialog">
+        <header class="menu-dialog__header">
+          <span class="blood-mark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" focusable="false">
+              <path d="M32 3C27 15 12 29 12 43a20 20 0 0 0 40 0C52 29 37 15 32 3Z" />
+              <path class="blood-mark__shine" d="M22 36c-2 4-3 8-2 11" />
+            </svg>
+          </span>
+          <h2 id="menu-title">Menu</h2>
+          <button class="icon-button" id="close-menu" type="button" aria-label="Close menu">×</button>
+        </header>
+
+        <div class="menu-dialog__body" id="menu-home">
+          <section class="menu-section instagram-section" aria-labelledby="instagram-title">
+            <div>
+              <p class="menu-kicker">Keep in touch</p>
+              <h3 id="instagram-title">Instagram</h3>
+            </div>
+            <div class="instagram-buttons">
+              <button
+                class="instagram-button"
+                type="button"
+                data-qr-name="Valdemar"
+                data-qr-src="assets/instagram-valdemar.png?v=17"
+              >
+                <span class="instagram-glyph" aria-hidden="true">◎</span>
+                <span>Valdemar</span>
+              </button>
+              <button
+                class="instagram-button"
+                type="button"
+                data-qr-name="Christian"
+                data-qr-src="assets/instagram-christian.png?v=17"
+              >
+                <span class="instagram-glyph" aria-hidden="true">◎</span>
+                <span>Christian</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="menu-section stats-section" aria-labelledby="stats-title">
+            <div class="stats-heading">
+              <div>
+                <p class="menu-kicker">This session only</p>
+                <h3 id="stats-title">Tonight&rsquo;s ratings</h3>
+              </div>
+              <strong id="stats-total">0 votes</strong>
+            </div>
+
+            <div class="stats-list">
+              <div class="stat-row" data-stat="awful">
+                <span>Terrible</span>
+                <div class="stat-track"><span class="stat-fill"></span></div>
+                <strong>0</strong>
+              </div>
+              <div class="stat-row" data-stat="meh">
+                <span>Could be better</span>
+                <div class="stat-track"><span class="stat-fill"></span></div>
+                <strong>0</strong>
+              </div>
+              <div class="stat-row" data-stat="good">
+                <span>Pretty good</span>
+                <div class="stat-track"><span class="stat-fill"></span></div>
+                <strong>0</strong>
+              </div>
+              <div class="stat-row" data-stat="great">
+                <span>Fang-tastic</span>
+                <div class="stat-track"><span class="stat-fill"></span></div>
+                <strong>0</strong>
+              </div>
+            </div>
+          </section>
         </div>
-      </div>
+
+        <div class="qr-view" id="qr-view" hidden>
+          <div class="qr-view__copy">
+            <button class="back-button" id="back-to-menu" type="button">← Back to menu</button>
+            <p class="menu-kicker">Instagram</p>
+            <h3>Find <span id="qr-name">Valdemar</span></h3>
+            <p>Point a phone camera at the code.</p>
+          </div>
+          <img id="qr-image" src="" alt="" />
+        </div>
+      </section>
     </div>
   </body>
 </html>

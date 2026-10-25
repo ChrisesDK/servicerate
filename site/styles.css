@@ -36,7 +36,9 @@ body {
 }
 
 button {
+  appearance: none;
   font: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:focus-visible {
@@ -259,7 +261,7 @@ h1 {
 
 .rating.is-selected {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 13px 30px color-mix(in srgb, currentColor 24%, transparent);
+  box-shadow: none;
   animation: rating-confirm 250ms cubic-bezier(0.2, 0.85, 0.35, 1.25);
 }
 

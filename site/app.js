@@ -22,14 +22,29 @@ const ratingButtons = [...document.querySelectorAll("[data-rating]")];
 const ratingReactions = document.querySelector("#rating-reactions");
 const victimNumber = document.querySelector("#victim-number");
 const ticketCaption = document.querySelector("#ticket-caption");
-const garlicButton = document.querySelector("#garlic-button");
-const garlicAlert = document.querySelector("#garlic-alert");
-const dismissGarlic = document.querySelector("#dismiss-garlic");
+const menuButton = document.querySelector("#menu-button");
+const menuModal = document.querySelector("#menu-modal");
+const closeMenuButton = document.querySelector("#close-menu");
+const menuHome = document.querySelector("#menu-home");
+const qrView = document.querySelector("#qr-view");
+const qrName = document.querySelector("#qr-name");
+const qrImage = document.querySelector("#qr-image");
+const backToMenu = document.querySelector("#back-to-menu");
+const qrButtons = [...document.querySelectorAll("[data-qr-name]")];
+const statRows = [...document.querySelectorAll("[data-stat]")];
+const statsTotal = document.querySelector("#stats-total");
 
 let servingNumber = 1;
 let selectionResetTimer;
 let emphasisResetTimer;
 let reactionResetTimer;
+
+const sessionRatings = {
+  awful: 0,
+  meh: 0,
+  good: 0,
+  great: 0,
+};
 
 const reactionSets = {
   awful: [
@@ -68,6 +83,20 @@ const showServingNumber = (caption = "Now serving") => {
   victimNumber.textContent = formatVictimNumber(servingNumber);
 };
 
+const renderStats = () => {
+  const counts = Object.values(sessionRatings);
+  const total = counts.reduce((sum, count) => sum + count, 0);
+  const largestCount = Math.max(1, ...counts);
+
+  statsTotal.textContent = `${total} ${total === 1 ? "vote" : "votes"}`;
+
+  statRows.forEach((row) => {
+    const count = sessionRatings[row.dataset.stat];
+    row.style.setProperty("--bar-width", `${(count / largestCount) * 100}%`);
+    row.querySelector("strong").textContent = String(count);
+  });
+};
+
 const shuffle = (items) => {
   const shuffled = [...items];
 
@@ -104,7 +133,9 @@ const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
 
   servingNumber += 1;
+  sessionRatings[selectedRating] += 1;
   showServingNumber("Next fanged customer");
+  renderStats();
 
   ratingButtons.forEach((item) => {
     const isSelected = item === button;
@@ -132,16 +163,35 @@ const resetRating = () => {
   showServingNumber();
 };
 
-const openGarlicAlert = () => {
-  garlicAlert.hidden = false;
-  document.body.style.overflow = "hidden";
-  dismissGarlic.focus();
+const showMenuHome = () => {
+  menuHome.hidden = false;
+  qrView.hidden = true;
+  qrImage.removeAttribute("src");
+  qrImage.alt = "";
 };
 
-const closeGarlicAlert = () => {
-  garlicAlert.hidden = true;
+const openMenu = () => {
+  showMenuHome();
+  menuModal.hidden = false;
+  document.body.style.overflow = "hidden";
+  closeMenuButton.focus();
+};
+
+const closeMenu = () => {
+  menuModal.hidden = true;
   document.body.style.overflow = "";
-  garlicButton.focus();
+  menuButton.focus();
+};
+
+const showQrCode = (button) => {
+  const name = button.dataset.qrName;
+
+  qrName.textContent = name;
+  qrImage.src = button.dataset.qrSrc;
+  qrImage.alt = `${name}'s Instagram QR code`;
+  menuHome.hidden = true;
+  qrView.hidden = false;
+  backToMenu.focus();
 };
 
 ratingButtons.forEach((button) => {
@@ -149,14 +199,20 @@ ratingButtons.forEach((button) => {
   button.addEventListener("click", () => chooseRating(button));
 });
 
-garlicButton.addEventListener("click", openGarlicAlert);
-dismissGarlic.addEventListener("click", closeGarlicAlert);
-garlicAlert.addEventListener("click", (event) => {
-  if (event.target === garlicAlert) closeGarlicAlert();
+menuButton.addEventListener("click", openMenu);
+closeMenuButton.addEventListener("click", closeMenu);
+backToMenu.addEventListener("click", showMenuHome);
+qrButtons.forEach((button) => button.addEventListener("click", () => showQrCode(button)));
+menuModal.addEventListener("click", (event) => {
+  if (event.target === menuModal) closeMenu();
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !garlicAlert.hidden) closeGarlicAlert();
+  if (event.key !== "Escape" || menuModal.hidden) return;
+
+  if (!qrView.hidden) showMenuHome();
+  else closeMenu();
 });
 document.addEventListener("pointerdown", tryEnterFullscreen, true);
 
 showServingNumber();
+renderStats();

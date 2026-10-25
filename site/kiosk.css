@@ -1,0 +1,762 @@
+/* Simplified full-screen rating kiosk. Face artwork and reaction animations live in styles.css. */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+button {
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reaction-particle {
+  filter: none !important;
+}
+
+.kiosk-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  height: 100svh;
+  min-height: 0;
+  place-content: stretch;
+  place-items: center;
+  padding: clamp(0.5rem, 1.5vmin, 1rem);
+}
+
+.rating-card {
+  display: grid;
+  width: min(calc(100vw - 2rem), 88rem);
+  height: min(calc(100svh - 2rem), 38rem);
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: clamp(1rem, 2.5vmin, 2rem);
+}
+
+.kiosk-header {
+  display: flex;
+  min-height: clamp(4rem, 10vmin, 6rem);
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.7rem, 2vw, 1.5rem);
+  padding: clamp(0.45rem, 1.5vmin, 0.85rem) clamp(0.75rem, 2.5vw, 2.1rem);
+  color: white;
+  background: var(--wine-dark);
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: clamp(0.55rem, 1.7vmin, 0.9rem);
+}
+
+.brand__mark {
+  display: grid;
+  width: clamp(2.5rem, 7vmin, 4rem);
+  height: clamp(2.5rem, 7vmin, 4rem);
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #f5e8d5;
+}
+
+.brand__mark svg {
+  width: 82%;
+  fill: var(--wine);
+}
+
+.brand__mark .brand__fang {
+  fill: var(--cream);
+}
+
+.brand > strong {
+  overflow: hidden;
+  font-size: clamp(1.15rem, 3.2vmin, 2rem);
+  font-weight: 850;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+  gap: clamp(0.45rem, 1.4vmin, 0.75rem);
+}
+
+.ticket {
+  display: grid;
+  min-width: clamp(6.5rem, 14vw, 9.5rem);
+  place-content: center;
+  padding: 0.38rem 0.7rem;
+  border: 1px dashed rgba(255, 255, 255, 0.42);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.035);
+  text-align: center;
+}
+
+.ticket span,
+.ticket strong {
+  display: block;
+}
+
+.ticket span {
+  color: #cfb9c6;
+  font-size: clamp(0.52rem, 1.7vmin, 0.72rem);
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.ticket strong {
+  margin-top: 0.15rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 3.8vmin, 1.65rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.menu-button {
+  display: flex;
+  min-width: clamp(5.4rem, 11vw, 7.5rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  padding: 0.45rem 0.75rem;
+  border: 2px solid #f0d6dd;
+  border-radius: 0.75rem;
+  color: var(--wine-dark);
+  background: var(--cream);
+  cursor: pointer;
+}
+
+.menu-button > span {
+  font-size: clamp(1.05rem, 3vmin, 1.45rem);
+  line-height: 1;
+}
+
+.menu-button strong {
+  font-size: clamp(0.78rem, 2.3vmin, 1rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.kiosk-content {
+  display: grid;
+  min-height: 0;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: clamp(0.45rem, 1.6vmin, 0.85rem);
+  padding: clamp(0.65rem, 2.2vmin, 1.35rem) clamp(0.7rem, 2.5vw, 2.1rem);
+}
+
+h1 {
+  margin: 0;
+  color: var(--wine-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 7vmin, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  text-align: center;
+}
+
+.rating-zone {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  place-items: stretch;
+  margin: 0;
+  padding: clamp(0.45rem, 1.6vmin, 1rem);
+  border: 2px solid #e7d8c4;
+  border-radius: clamp(0.85rem, 2.2vmin, 1.4rem);
+  background: rgba(255, 255, 255, 0.48);
+}
+
+.ratings {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(0.2rem, 1.2vw, 1rem);
+  padding: 0;
+}
+
+.rating {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  gap: clamp(0.35rem, 1.7vmin, 0.8rem);
+  padding: clamp(0.25rem, 1vmin, 0.65rem) 0.1rem;
+  border: 0;
+  border-radius: clamp(0.75rem, 2vmin, 1.2rem);
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: transform 180ms ease, filter 180ms ease, opacity 180ms ease;
+}
+
+.rating--awful {
+  color: var(--red);
+}
+
+.rating--meh {
+  color: var(--red-soft);
+}
+
+.rating--good {
+  color: var(--green-soft);
+}
+
+.rating--great {
+  color: var(--green);
+}
+
+.rating::after {
+  display: none;
+}
+
+.rating:hover,
+.rating.is-selected {
+  transform: translateY(-3px) scale(1.035);
+}
+
+.rating.is-selected {
+  animation: rating-confirm 250ms cubic-bezier(0.2, 0.85, 0.35, 1.25);
+}
+
+.rating.is-dimmed {
+  filter: grayscale(1);
+  opacity: 0.24;
+  transform: scale(0.9);
+}
+
+.face {
+  width: clamp(5rem, min(15vw, 28vmin), 10rem);
+  border-width: clamp(0.24rem, 0.65vmin, 0.42rem);
+  box-shadow: none;
+}
+
+.rating__label {
+  min-height: auto;
+  color: var(--ink);
+  font-size: clamp(0.82rem, 2.8vmin, 1.2rem);
+  font-weight: 800;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.menu-modal[hidden],
+.menu-dialog__body[hidden],
+.qr-view[hidden] {
+  display: none;
+}
+
+.menu-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.45rem, 2vmin, 1rem);
+  background: rgba(23, 10, 24, 0.86);
+}
+
+.menu-dialog {
+  position: relative;
+  display: grid;
+  width: min(100%, 58rem);
+  max-height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 3px solid var(--wine);
+  border-radius: clamp(0.85rem, 2.4vmin, 1.4rem);
+  background: var(--cream);
+}
+
+.menu-dialog__header {
+  display: grid;
+  min-height: clamp(3rem, 10vmin, 4.5rem);
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(0.55rem, 2vmin, 0.9rem);
+  padding: 0.45rem clamp(0.65rem, 2vmin, 1rem);
+  color: white;
+  background: var(--wine-dark);
+}
+
+.blood-mark {
+  display: grid;
+  width: clamp(2rem, 7vmin, 3rem);
+  height: clamp(2rem, 7vmin, 3rem);
+  place-items: center;
+  color: #f4b7c5;
+}
+
+.blood-mark svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: currentColor;
+}
+
+.blood-mark__shine {
+  fill: none;
+  stroke: var(--cream);
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+
+.menu-dialog h2,
+.menu-dialog h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1;
+}
+
+.menu-dialog h2 {
+  font-size: clamp(1.65rem, 5vmin, 2.6rem);
+}
+
+.menu-dialog h3 {
+  font-size: clamp(1.35rem, 4.2vmin, 2rem);
+}
+
+.icon-button {
+  display: grid;
+  width: clamp(2.35rem, 7vmin, 3rem);
+  height: clamp(2.35rem, 7vmin, 3rem);
+  place-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  font-size: clamp(1.35rem, 4vmin, 2rem);
+  line-height: 1;
+}
+
+.menu-dialog__body {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(0.6rem, 2vmin, 1rem);
+  padding: clamp(0.6rem, 2vmin, 1rem);
+}
+
+.menu-section {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: clamp(0.55rem, 1.8vmin, 0.9rem);
+  padding: clamp(0.65rem, 2vmin, 1rem);
+  border: 2px solid #e7d8c4;
+  border-radius: clamp(0.7rem, 2vmin, 1rem);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.menu-kicker {
+  margin: 0 0 0.22rem;
+  color: var(--wine);
+  font-size: clamp(0.58rem, 1.9vmin, 0.72rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.instagram-buttons {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.45rem, 1.5vmin, 0.75rem);
+}
+
+.instagram-button {
+  display: grid;
+  min-height: clamp(4.5rem, 20vmin, 8rem);
+  place-content: center;
+  gap: 0.35rem;
+  border: 2px solid var(--wine);
+  border-radius: clamp(0.7rem, 2vmin, 1rem);
+  color: white;
+  background: linear-gradient(135deg, var(--wine-dark), var(--wine) 58%, var(--green));
+  cursor: pointer;
+  font-size: clamp(0.82rem, 2.7vmin, 1.05rem);
+  font-weight: 850;
+}
+
+.instagram-glyph {
+  font-size: clamp(1.8rem, 7vmin, 3rem);
+  line-height: 0.8;
+}
+
+.stats-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stats-heading > strong {
+  color: var(--wine);
+  font-size: clamp(0.72rem, 2.1vmin, 0.9rem);
+  white-space: nowrap;
+}
+
+.stats-list {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  gap: clamp(0.35rem, 1.25vmin, 0.65rem);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: minmax(5.8rem, 0.8fr) minmax(5rem, 1.35fr) 1.8rem;
+  align-items: center;
+  gap: clamp(0.4rem, 1.4vmin, 0.7rem);
+  font-size: clamp(0.68rem, 2.1vmin, 0.88rem);
+  font-weight: 750;
+}
+
+.stat-row > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stat-row > strong {
+  color: var(--wine-dark);
+  text-align: right;
+}
+
+.stat-track {
+  height: clamp(0.65rem, 2.5vmin, 1rem);
+  overflow: hidden;
+  border: 1px solid #d7c4aa;
+  border-radius: 999px;
+  background: #ebdfce;
+}
+
+.stat-fill {
+  display: block;
+  width: var(--bar-width, 0%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--bar-color, var(--wine));
+  transition: width 260ms ease;
+}
+
+.stat-row[data-stat="awful"] {
+  --bar-color: var(--red);
+}
+
+.stat-row[data-stat="meh"] {
+  --bar-color: var(--red-soft);
+}
+
+.stat-row[data-stat="good"] {
+  --bar-color: var(--green-soft);
+}
+
+.stat-row[data-stat="great"] {
+  --bar-color: var(--green);
+}
+
+.qr-view {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(12rem, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(0.75rem, 3vmin, 1.5rem);
+  padding: clamp(0.65rem, 2vmin, 1rem);
+}
+
+.qr-view__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.qr-view__copy h3 {
+  margin-top: 0.15rem;
+  font-size: clamp(2rem, 7vmin, 4rem);
+}
+
+.qr-view__copy > p:last-child {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: clamp(0.78rem, 2.5vmin, 1rem);
+  font-weight: 650;
+}
+
+.back-button {
+  margin-bottom: clamp(0.65rem, 2vmin, 1rem);
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--wine);
+  border-radius: 999px;
+  color: var(--wine);
+  background: transparent;
+  cursor: pointer;
+  font-size: clamp(0.7rem, 2.2vmin, 0.9rem);
+  font-weight: 850;
+}
+
+#qr-image {
+  display: block;
+  width: min(100%, 22rem);
+  max-height: min(70vmin, 22rem);
+  justify-self: center;
+  object-fit: contain;
+  border-radius: clamp(0.6rem, 2vmin, 1rem);
+}
+
+@media (max-width: 1400px) {
+  body {
+    background: var(--cream);
+  }
+
+  .ambient {
+    display: none;
+  }
+
+  .kiosk-shell {
+    padding: 0;
+    place-content: stretch;
+  }
+
+  .rating-card {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .kiosk-header {
+    min-height: clamp(3.2rem, 17vmin, 5.4rem);
+    padding: clamp(0.32rem, 1.4vmin, 0.55rem) clamp(0.65rem, 2.5vw, 2rem);
+  }
+
+  .brand__mark {
+    width: clamp(2.2rem, 9vmin, 3rem);
+    height: clamp(2.2rem, 9vmin, 3rem);
+  }
+
+  .brand > strong {
+    font-size: clamp(1rem, 4vmin, 1.45rem);
+  }
+
+  .kiosk-content {
+    gap: clamp(0.35rem, 1.5vmin, 0.65rem);
+    padding: clamp(0.4rem, 1.7vmin, 0.75rem) clamp(0.6rem, 2.5vw, 2rem);
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 9vmin, 3.2rem);
+  }
+
+  .rating-zone {
+    padding: clamp(0.32rem, 1.35vmin, 0.6rem);
+  }
+
+  .face {
+    width: clamp(4.5rem, min(15vw, 26vmin), 7.6rem);
+  }
+
+  .rating__label {
+    font-size: clamp(0.7rem, 3vmin, 0.94rem);
+  }
+
+  .menu-dialog {
+    width: min(100%, 55rem);
+  }
+}
+
+@media (orientation: landscape) and (max-height: 350px) {
+  .ticket span {
+    display: none;
+  }
+
+  .menu-button {
+    min-width: 3.2rem;
+  }
+
+  .menu-button strong {
+    display: none;
+  }
+
+  .menu-dialog__header {
+    min-height: 2.8rem;
+  }
+
+  .menu-section {
+    padding: 0.5rem;
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    background: var(--cream);
+  }
+
+  .ambient {
+    display: none !important;
+  }
+
+  .kiosk-shell {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 100vh;
+    width: 100dvh;
+    height: 100vw;
+    height: 100dvw;
+    min-height: 0;
+    place-content: stretch;
+    padding: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+  }
+
+  .rating-card {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .menu-modal,
+  .rating-reactions {
+    left: 50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    width: 100vh;
+    width: 100dvh;
+    height: 100vw;
+    height: 100dvw;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+  }
+
+  .kiosk-header {
+    min-height: clamp(3.2rem, 17vmin, 5.4rem);
+    padding: clamp(0.32rem, 1.4vmin, 0.55rem) clamp(0.65rem, 2.5vh, 2rem);
+  }
+
+  .brand__mark {
+    width: clamp(2.2rem, 9vmin, 3rem);
+    height: clamp(2.2rem, 9vmin, 3rem);
+  }
+
+  .brand > strong {
+    font-size: clamp(1rem, 4vmin, 1.45rem);
+  }
+
+  .kiosk-content {
+    gap: clamp(0.35rem, 1.5vmin, 0.65rem);
+    padding: clamp(0.4rem, 1.7vmin, 0.75rem) clamp(0.6rem, 2.5vh, 2rem);
+  }
+
+  h1 {
+    font-size: clamp(1.7rem, 9vmin, 3.2rem);
+  }
+
+  .face {
+    width: clamp(4.5rem, min(15vh, 26vmin), 7.6rem);
+  }
+
+  .rating__label {
+    font-size: clamp(0.7rem, 3vmin, 0.94rem);
+  }
+}
+
+@media (display-mode: fullscreen), (display-mode: standalone) {
+  html,
+  body,
+  .kiosk-shell {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--cream);
+  }
+
+  .rating-card {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+html.is-mobile-landscape,
+html.is-mobile-landscape body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+html.is-mobile-landscape .kiosk-shell {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  width: 100dvw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  place-content: stretch;
+  transform: none;
+}
+
+html.is-mobile-landscape .rating-card {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
