@@ -516,7 +516,7 @@ h1 {
 }
 
 .reaction-particle--meh {
-  animation-name: gloomy-across;
+  animation-name: fly-across;
 }
 
 @keyframes fly-across {
@@ -546,26 +546,6 @@ h1 {
 
   100% {
     transform: translate3d(115vw, -8vh, 0) rotate(25deg) scale(0.8);
-  }
-}
-
-@keyframes gloomy-across {
-  0% {
-    transform: translate3d(-10vw, -3vh, 0) rotate(-14deg) scale(0.7);
-    opacity: 0;
-  }
-
-  18% {
-    opacity: 1;
-  }
-
-  55% {
-    transform: translate3d(58vw, 8vh, 0) rotate(12deg) scale(1.08);
-  }
-
-  100% {
-    transform: translate3d(115vw, 18vh, 0) rotate(-8deg) scale(0.85);
-    opacity: 0.8;
   }
 }
 

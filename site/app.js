@@ -28,6 +28,7 @@ const closeMenuButton = document.querySelector("#close-menu");
 const menuHome = document.querySelector("#menu-home");
 const qrView = document.querySelector("#qr-view");
 const qrName = document.querySelector("#qr-name");
+const qrHeading = document.querySelector("#qr-heading");
 const qrArt = document.querySelector("#qr-art");
 const qrImage = document.querySelector("#qr-image");
 const qrCanvas = document.querySelector("#qr-canvas");
@@ -211,10 +212,11 @@ const startQrAnimation = async (maskSource, seed) => {
     paintCanvas.height = renderHeight;
 
     const blobs = [
-      { x: 0.17, y: 0.2, radius: 0.43, speed: 0.00023, drift: 0.21, phase: 0.3 + seed },
-      { x: 0.72, y: 0.27, radius: 0.39, speed: 0.00019, drift: 0.24, phase: 2.1 + seed },
-      { x: 0.42, y: 0.72, radius: 0.46, speed: 0.00017, drift: 0.25, phase: 4.4 + seed },
-      { x: 0.84, y: 0.78, radius: 0.34, speed: 0.00027, drift: 0.16, phase: 5.6 + seed },
+      { x: 0.16, y: 0.18, radius: 0.38, speed: 0.00062, drift: 0.27, phase: 0.3 + seed },
+      { x: 0.76, y: 0.2, radius: 0.34, speed: 0.00051, drift: 0.28, phase: 2.1 + seed },
+      { x: 0.44, y: 0.54, radius: 0.42, speed: 0.00057, drift: 0.3, phase: 4.4 + seed },
+      { x: 0.82, y: 0.75, radius: 0.36, speed: 0.00068, drift: 0.22, phase: 5.6 + seed },
+      { x: 0.2, y: 0.82, radius: 0.32, speed: 0.00073, drift: 0.2, phase: 3.2 + seed },
     ];
     let previousFrame = 0;
 
@@ -231,9 +233,9 @@ const startQrAnimation = async (maskSource, seed) => {
       paintContext.clearRect(0, 0, renderWidth, renderHeight);
 
       const base = paintContext.createLinearGradient(0, 0, renderWidth, renderHeight);
-      base.addColorStop(0, "#68102d");
-      base.addColorStop(0.48, "#3a0f4a");
-      base.addColorStop(1, "#2a1038");
+      base.addColorStop(0, "#2a1038");
+      base.addColorStop(0.52, "#3a0f4a");
+      base.addColorStop(1, "#240d31");
       paintContext.fillStyle = base;
       paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
@@ -243,9 +245,9 @@ const startQrAnimation = async (maskSource, seed) => {
         const y = (blob.y + Math.cos(angle * 0.91) * blob.drift) * renderHeight;
         const radius = blob.radius * Math.min(renderWidth, renderHeight);
         const gradient = paintContext.createRadialGradient(x, y, 0, x, y, radius);
-        const color = index % 2 === 0 ? "122, 18, 48" : "76, 21, 94";
+        const color = index % 2 === 0 ? "143, 18, 57" : "92, 25, 120";
         gradient.addColorStop(0, `rgba(${color}, 1)`);
-        gradient.addColorStop(0.48, `rgba(${color}, 0.78)`);
+        gradient.addColorStop(0.58, `rgba(${color}, 0.94)`);
         gradient.addColorStop(1, `rgba(${color}, 0)`);
         paintContext.fillStyle = gradient;
         paintContext.fillRect(0, 0, renderWidth, renderHeight);
@@ -306,7 +308,7 @@ const showQrCode = (button) => {
   menuHome.hidden = true;
   qrView.hidden = false;
   startQrAnimation(activeQrMask, activeQrSeed);
-  backToMenu.focus();
+  qrHeading.focus({ preventScroll: true });
 };
 
 ratingButtons.forEach((button) => {
