@@ -2,7 +2,7 @@
 
 A small, spooky service-rating kiosk built as a Halloween costume prop. Guests can rate Vampire Food Services using four large faces, receive a suitably undead response, and activate the Bite Escape safety protocol when necessary.
 
-The kiosk is designed for phones and tablets in landscape orientation. Portrait screens show a rotation prompt. The “Now serving” number starts at `V-001` on every page load and advances on every face tap until the page is refreshed.
+The kiosk is designed for phones and tablets as a landscape interface. On portrait mobile screens, the complete kiosk rotates itself sideways instead of showing a rotation prompt. Compact devices hide the branded header, retain a small floating counter, and request browser fullscreen after the first interaction when supported. The “Now serving” number starts at `V-001` on every page load and advances on every face tap until the page is refreshed.
 
 ## Live site
 

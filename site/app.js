@@ -9,6 +9,16 @@ const dismissGarlic = document.querySelector("#dismiss-garlic");
 let servingNumber = 1;
 let selectionResetTimer;
 
+const tryEnterFullscreen = () => {
+  const isCompactDevice = window.matchMedia("(max-width: 900px), (max-height: 500px)").matches;
+
+  if (!isCompactDevice || document.fullscreenElement || !document.documentElement.requestFullscreen) return;
+
+  document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {
+    // Fullscreen availability varies by browser; the CSS layout remains usable without it.
+  });
+};
+
 const formatVictimNumber = (number) => `V-${String(number).padStart(3, "0")}`;
 
 const showServingNumber = (caption = "Now serving") => {
@@ -38,6 +48,8 @@ const releaseBats = () => {
 const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
 
+  tryEnterFullscreen();
+
   servingNumber += 1;
   showServingNumber("Next fanged customer");
 
@@ -64,6 +76,7 @@ const resetRating = () => {
 };
 
 const openGarlicAlert = () => {
+  tryEnterFullscreen();
   garlicAlert.hidden = false;
   document.body.style.overflow = "hidden";
   dismissGarlic.focus();
