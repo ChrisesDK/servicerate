@@ -15,11 +15,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Rate Our Service | Snacks for Vampires</title>
-    <link rel="icon" href="favicon.svg?v=17" type="image/svg+xml" />
-    <link rel="manifest" href="manifest.webmanifest?v=17" />
-    <link rel="stylesheet" href="styles.css?v=17" />
-    <link rel="stylesheet" href="kiosk.css?v=17" />
-    <script src="app.js?v=17" defer></script>
+    <link rel="icon" href="favicon.svg?v=18" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest?v=18" />
+    <link rel="stylesheet" href="styles.css?v=18" />
+    <link rel="stylesheet" href="kiosk.css?v=18" />
+    <script src="app.js?v=18" defer></script>
   </head>
   <body>
     <div class="ambient ambient--one" aria-hidden="true"></div>
@@ -120,7 +120,8 @@
                 class="instagram-button"
                 type="button"
                 data-qr-name="Valdemar"
-                data-qr-src="assets/instagram-valdemar.png?v=17"
+                data-qr-src="assets/instagram-valdemar-red-purple.png?v=18"
+                data-qr-mask="assets/instagram-valdemar-mask.png?v=18"
               >
                 <span class="instagram-glyph" aria-hidden="true">◎</span>
                 <span>Valdemar</span>
@@ -129,7 +130,8 @@
                 class="instagram-button"
                 type="button"
                 data-qr-name="Christian"
-                data-qr-src="assets/instagram-christian.png?v=17"
+                data-qr-src="assets/instagram-christian-red-purple.png?v=18"
+                data-qr-mask="assets/instagram-christian-mask.png?v=18"
               >
                 <span class="instagram-glyph" aria-hidden="true">◎</span>
                 <span>Christian</span>
@@ -178,7 +180,10 @@
             <h3>Find <span id="qr-name">Valdemar</span></h3>
             <p>Point a phone camera at the code.</p>
           </div>
-          <img id="qr-image" src="" alt="" />
+          <div class="qr-art" id="qr-art">
+            <img id="qr-image" src="" alt="" />
+            <canvas id="qr-canvas" aria-hidden="true"></canvas>
+          </div>
         </div>
       </section>
     </div>
