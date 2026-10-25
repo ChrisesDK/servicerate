@@ -184,7 +184,7 @@ h1 {
 .feedback {
   display: grid;
   min-height: 0;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 0.65rem;
   margin: 0;
@@ -215,13 +215,6 @@ h1 {
   font-size: clamp(0.76rem, 1.3vw, 0.98rem);
   font-weight: 600;
   line-height: 1.15;
-}
-
-.again-button {
-  flex: 0 0 auto;
-  padding: clamp(0.5rem, 1.2vh, 0.72rem) clamp(0.65rem, 1.4vw, 1rem);
-  white-space: nowrap;
-  font-size: clamp(0.75rem, 1.25vw, 0.95rem);
 }
 
 .rating-zone {
@@ -591,11 +584,6 @@ h1 {
   }
 
   .feedback p {
-    font-size: 0.68rem;
-  }
-
-  .again-button {
-    padding: 0.44rem 0.58rem;
     font-size: 0.68rem;
   }
 

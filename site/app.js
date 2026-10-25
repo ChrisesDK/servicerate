@@ -3,7 +3,6 @@ const feedback = document.querySelector("#feedback");
 const feedbackKicker = document.querySelector("#feedback-kicker");
 const feedbackTitle = document.querySelector("#feedback-title");
 const feedbackCopy = document.querySelector("#feedback-copy");
-const rateAgainButton = document.querySelector("#rate-again");
 const batSwarm = document.querySelector("#bat-swarm");
 const victimNumber = document.querySelector("#victim-number");
 const ticketCaption = document.querySelector("#ticket-caption");
@@ -13,7 +12,7 @@ const dismissGarlic = document.querySelector("#dismiss-garlic");
 
 const counterKey = "vfs-serving-count-v2";
 let servingNumber = Number.parseInt(sessionStorage.getItem(counterKey) ?? "1", 10);
-let ratingSubmitted = false;
+let feedbackResetTimer;
 
 if (!Number.isFinite(servingNumber) || servingNumber < 1) {
   servingNumber = 1;
@@ -67,15 +66,12 @@ const releaseBats = () => {
 const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
   const response = responses[selectedRating];
+  const ratedNumber = servingNumber;
 
-  if (!ratingSubmitted) {
-    const ratedNumber = servingNumber;
-    servingNumber += 1;
-    sessionStorage.setItem(counterKey, String(servingNumber));
-    ratingSubmitted = true;
-    feedbackKicker.textContent = `${formatVictimNumber(ratedNumber)} logged`;
-    showServingNumber("Next serving");
-  }
+  servingNumber += 1;
+  sessionStorage.setItem(counterKey, String(servingNumber));
+  feedbackKicker.textContent = `${formatVictimNumber(ratedNumber)} logged`;
+  showServingNumber("Next fanged customer");
 
   ratingButtons.forEach((item) => {
     const isSelected = item === button;
@@ -86,7 +82,9 @@ const chooseRating = (button) => {
   feedbackTitle.textContent = response.title;
   feedbackCopy.textContent = response.copy;
   feedback.dataset.rating = selectedRating;
-  rateAgainButton.hidden = false;
+
+  window.clearTimeout(feedbackResetTimer);
+  feedbackResetTimer = window.setTimeout(resetRating, 1800);
 
   if (selectedRating === "good" || selectedRating === "great") {
     releaseBats();
@@ -102,10 +100,7 @@ const resetRating = () => {
   feedbackTitle.textContent = "Awaiting your verdict";
   feedbackCopy.textContent = "Choose carefully. The night shift is listening.";
   delete feedback.dataset.rating;
-  rateAgainButton.hidden = true;
-  ratingSubmitted = false;
   showServingNumber();
-  ratingButtons[0].focus();
 };
 
 const openGarlicAlert = () => {
@@ -125,7 +120,6 @@ ratingButtons.forEach((button) => {
   button.addEventListener("click", () => chooseRating(button));
 });
 
-rateAgainButton.addEventListener("click", resetRating);
 garlicButton.addEventListener("click", openGarlicAlert);
 dismissGarlic.addEventListener("click", closeGarlicAlert);
 garlicAlert.addEventListener("click", (event) => {
