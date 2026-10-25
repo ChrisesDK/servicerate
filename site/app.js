@@ -33,7 +33,6 @@ const qrHeading = document.querySelector("#qr-heading");
 const qrArt = document.querySelector("#qr-art");
 const qrImage = document.querySelector("#qr-image");
 const qrCanvas = document.querySelector("#qr-canvas");
-const backToMenu = document.querySelector("#back-to-menu");
 const qrButtons = [...document.querySelectorAll("[data-qr-name]")];
 const statRows = [...document.querySelectorAll("[data-stat]")];
 const statsTotal = document.querySelector("#stats-total");
@@ -213,11 +212,11 @@ const startQrAnimation = async (maskSource, seed) => {
     paintCanvas.height = renderHeight;
 
     const blobs = [
-      { x: 0.16, y: 0.18, radius: 0.38, speed: 0.00062, drift: 0.27, phase: 0.3 + seed },
-      { x: 0.76, y: 0.2, radius: 0.34, speed: 0.00051, drift: 0.28, phase: 2.1 + seed },
-      { x: 0.44, y: 0.54, radius: 0.42, speed: 0.00057, drift: 0.3, phase: 4.4 + seed },
-      { x: 0.82, y: 0.75, radius: 0.36, speed: 0.00068, drift: 0.22, phase: 5.6 + seed },
-      { x: 0.2, y: 0.82, radius: 0.32, speed: 0.00073, drift: 0.2, phase: 3.2 + seed },
+      { x: 0.16, y: 0.18, radius: 0.36, speed: 0.00082, drift: 0.3, phase: 0.3 + seed },
+      { x: 0.76, y: 0.2, radius: 0.32, speed: 0.00073, drift: 0.3, phase: 2.1 + seed },
+      { x: 0.44, y: 0.54, radius: 0.4, speed: 0.00078, drift: 0.32, phase: 4.4 + seed },
+      { x: 0.82, y: 0.75, radius: 0.34, speed: 0.00091, drift: 0.25, phase: 5.6 + seed },
+      { x: 0.2, y: 0.82, radius: 0.3, speed: 0.00096, drift: 0.23, phase: 3.2 + seed },
     ];
     let previousFrame = 0;
 
@@ -234,9 +233,9 @@ const startQrAnimation = async (maskSource, seed) => {
       paintContext.clearRect(0, 0, renderWidth, renderHeight);
 
       const base = paintContext.createLinearGradient(0, 0, renderWidth, renderHeight);
-      base.addColorStop(0, "#2a1038");
-      base.addColorStop(0.52, "#3a0f4a");
-      base.addColorStop(1, "#240d31");
+      base.addColorStop(0, "#29060f");
+      base.addColorStop(0.52, "#4a0b1c");
+      base.addColorStop(1, "#340713");
       paintContext.fillStyle = base;
       paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
@@ -246,13 +245,30 @@ const startQrAnimation = async (maskSource, seed) => {
         const y = (blob.y + Math.cos(angle * 0.91) * blob.drift) * renderHeight;
         const radius = blob.radius * Math.min(renderWidth, renderHeight);
         const gradient = paintContext.createRadialGradient(x, y, 0, x, y, radius);
-        const color = index % 2 === 0 ? "143, 18, 57" : "92, 25, 120";
+        const color = index % 2 === 0 ? "181, 16, 59" : "111, 7, 34";
         gradient.addColorStop(0, `rgba(${color}, 1)`);
-        gradient.addColorStop(0.58, `rgba(${color}, 0.94)`);
+        gradient.addColorStop(0.58, `rgba(${color}, 0.96)`);
         gradient.addColorStop(1, `rgba(${color}, 0)`);
         paintContext.fillStyle = gradient;
         paintContext.fillRect(0, 0, renderWidth, renderHeight);
       });
+
+      const sweepProgress = (time * 0.00018 + seed * 0.13) % 1.6 - 0.3;
+      const sweepX = sweepProgress * renderWidth;
+      const sweepRadius = renderWidth * 0.32;
+      const sweep = paintContext.createLinearGradient(
+        sweepX - sweepRadius,
+        0,
+        sweepX + sweepRadius,
+        renderHeight,
+      );
+      sweep.addColorStop(0, "rgba(196, 20, 65, 0)");
+      sweep.addColorStop(0.42, "rgba(196, 20, 65, 0.15)");
+      sweep.addColorStop(0.5, "rgba(196, 20, 65, 1)");
+      sweep.addColorStop(0.58, "rgba(196, 20, 65, 0.15)");
+      sweep.addColorStop(1, "rgba(196, 20, 65, 0)");
+      paintContext.fillStyle = sweep;
+      paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
       // The moving color field is clipped by the original QR ink. The mask is
       // never transformed, faded, or animated, so the scannable geometry stays fixed.
@@ -260,7 +276,7 @@ const startQrAnimation = async (maskSource, seed) => {
       paintContext.drawImage(mask, 0, 0, renderWidth, renderHeight);
       paintContext.globalCompositeOperation = "source-over";
 
-      context.fillStyle = "#ffffff";
+      context.fillStyle = "#fff9ed";
       context.fillRect(0, 0, renderWidth, renderHeight);
       context.drawImage(paintCanvas, 0, 0);
 
@@ -270,7 +286,7 @@ const startQrAnimation = async (maskSource, seed) => {
 
     qrAnimationFrame = window.requestAnimationFrame(drawFrame);
   } catch {
-    // The static red-purple image remains visible if canvas or mask loading fails.
+    // The static QR image remains visible if canvas or mask loading fails.
   }
 };
 
@@ -320,7 +336,6 @@ ratingButtons.forEach((button) => {
 
 menuButton.addEventListener("click", openMenu);
 closeMenuButton.addEventListener("click", closeMenu);
-backToMenu.addEventListener("click", showMenuHome);
 qrButtons.forEach((button) => button.addEventListener("click", () => showQrCode(button)));
 menuModal.addEventListener("click", (event) => {
   if (event.target === menuModal) closeMenu();
