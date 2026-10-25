@@ -14,9 +14,12 @@ const tryEnterFullscreen = () => {
 
   if (!isCompactDevice || document.fullscreenElement || !document.documentElement.requestFullscreen) return;
 
-  document.documentElement.requestFullscreen({ navigationUI: "hide" }).catch(() => {
-    // Fullscreen availability varies by browser; the CSS layout remains usable without it.
-  });
+  document.documentElement
+    .requestFullscreen({ navigationUI: "hide" })
+    .then(() => document.removeEventListener("pointerdown", tryEnterFullscreen, true))
+    .catch(() => {
+      // Fullscreen availability varies by browser; a later tap may try again.
+    });
 };
 
 const formatVictimNumber = (number) => `V-${String(number).padStart(3, "0")}`;
@@ -48,8 +51,6 @@ const releaseBats = () => {
 const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
 
-  tryEnterFullscreen();
-
   servingNumber += 1;
   showServingNumber("Next fanged customer");
 
@@ -76,7 +77,6 @@ const resetRating = () => {
 };
 
 const openGarlicAlert = () => {
-  tryEnterFullscreen();
   garlicAlert.hidden = false;
   document.body.style.overflow = "hidden";
   dismissGarlic.focus();
@@ -101,5 +101,6 @@ garlicAlert.addEventListener("click", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !garlicAlert.hidden) closeGarlicAlert();
 });
+document.addEventListener("pointerdown", tryEnterFullscreen, true);
 
 showServingNumber();
