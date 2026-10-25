@@ -511,14 +511,6 @@ h1 {
   animation: fly-across var(--duration) cubic-bezier(0.25, 0.7, 0.35, 1) var(--delay) forwards;
 }
 
-.reaction-particle--awful {
-  animation-name: complaint-across;
-}
-
-.reaction-particle--meh {
-  animation-name: fly-across;
-}
-
 @keyframes fly-across {
   0% {
     transform: translate3d(-10vw, 10vh, 0) rotate(var(--wobble)) scale(0.7);
@@ -528,24 +520,6 @@ h1 {
   }
   100% {
     transform: translate3d(115vw, -10vh, 0) rotate(-7deg) scale(0.9);
-  }
-}
-
-@keyframes complaint-across {
-  0% {
-    transform: translate3d(-10vw, 4vh, 0) rotate(-28deg) scale(0.65);
-  }
-
-  38% {
-    transform: translate3d(42vw, -17vh, 0) rotate(22deg) scale(1.2);
-  }
-
-  68% {
-    transform: translate3d(73vw, 10vh, 0) rotate(-18deg) scale(1);
-  }
-
-  100% {
-    transform: translate3d(115vw, -8vh, 0) rotate(25deg) scale(0.8);
   }
 }
 
