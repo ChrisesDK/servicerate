@@ -16,6 +16,10 @@ body {
   display: none;
 }
 
+.compact-title {
+  display: none;
+}
+
 .kiosk-shell {
   display: grid;
   width: 100%;
@@ -718,5 +722,213 @@ h1 {
     min-height: 2rem;
     padding: 0.3rem 10rem 0.3rem 0.75rem;
     font-size: 0.68rem;
+  }
+}
+
+/*
+ * Compact kiosk mode. Portrait phones are rotated by the shell above, so their
+ * CSS viewport still reports "portrait" even though the interface is visually
+ * landscape. Keep this block independent from the desktop/tablet composition.
+ */
+@media (orientation: portrait) and (max-width: 600px),
+  (orientation: landscape) and (max-height: 500px) {
+  .rating-card {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .kiosk-header {
+    position: static;
+    z-index: auto;
+    display: flex;
+    min-height: 0;
+    flex: 0 0 auto;
+    gap: clamp(0.45rem, 1.8vmin, 0.75rem);
+    padding: clamp(0.32rem, 1.3vmin, 0.48rem) clamp(0.55rem, 2.1vmin, 0.85rem);
+    background: var(--wine-dark);
+    pointer-events: auto;
+  }
+
+  .brand {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .brand > span:last-child {
+    display: none;
+  }
+
+  .brand__mark {
+    width: clamp(1.8rem, 9vmin, 2.35rem);
+    height: clamp(1.8rem, 9vmin, 2.35rem);
+  }
+
+  .brand__mark svg {
+    width: 66%;
+  }
+
+  .compact-title {
+    display: grid;
+    min-width: 0;
+    margin-right: auto;
+    line-height: 1;
+  }
+
+  .compact-title small,
+  .compact-title strong {
+    display: block;
+  }
+
+  .compact-title small {
+    align-self: end;
+    color: #d8bdca;
+    font-size: clamp(0.48rem, 2.25vmin, 0.62rem);
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .compact-title strong {
+    align-self: start;
+    margin-top: 0.13rem;
+    overflow: hidden;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(0.88rem, 4.1vmin, 1.08rem);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ticket {
+    display: grid;
+    min-width: clamp(5.4rem, 24vmin, 6.5rem);
+    flex: 0 0 auto;
+    gap: 0;
+    padding: 0.2rem 0.42rem;
+    border-width: 1px;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    text-align: center;
+  }
+
+  .ticket span,
+  .ticket strong {
+    display: block;
+  }
+
+  .ticket span {
+    font-size: clamp(0.45rem, 2.15vmin, 0.56rem);
+    line-height: 1;
+  }
+
+  .ticket strong {
+    margin-top: 0.1rem;
+    font-size: clamp(0.92rem, 4.4vmin, 1.15rem);
+  }
+
+  .kiosk-content {
+    grid-row: 2;
+    grid-template-columns: minmax(10.5rem, 0.72fr) minmax(0, 1.65fr);
+    align-items: center;
+    gap: clamp(0.5rem, 2.2vmin, 0.8rem);
+    padding: clamp(0.42rem, 1.9vmin, 0.68rem);
+  }
+
+  .intro {
+    justify-content: center;
+    gap: clamp(0.42rem, 1.7vmin, 0.65rem);
+  }
+
+  .intro__heading {
+    display: none;
+  }
+
+  .privacy-joke {
+    gap: clamp(0.38rem, 1.5vmin, 0.55rem);
+    padding: clamp(0.42rem, 1.7vmin, 0.6rem);
+    border-left-width: 0.3rem;
+    border-radius: 0.72rem;
+  }
+
+  .privacy-joke__mark {
+    width: clamp(1.85rem, 8.5vmin, 2.3rem);
+    height: clamp(1.85rem, 8.5vmin, 2.3rem);
+    font-size: clamp(1.1rem, 5vmin, 1.4rem);
+  }
+
+  .privacy-joke strong {
+    font-size: clamp(0.82rem, 3.7vmin, 1rem);
+  }
+
+  .privacy-joke p > span {
+    margin-top: 0.14rem;
+    font-size: clamp(0.66rem, 3vmin, 0.78rem);
+    line-height: 1.12;
+  }
+
+  .safety-button {
+    min-height: 0;
+    gap: clamp(0.38rem, 1.6vmin, 0.55rem);
+    padding: clamp(0.38rem, 1.65vmin, 0.56rem);
+    border-radius: 0.72rem;
+  }
+
+  .safety-button__icon {
+    font-size: clamp(1.4rem, 6.8vmin, 1.85rem);
+  }
+
+  .safety-button strong {
+    font-size: clamp(0.78rem, 3.65vmin, 0.96rem);
+  }
+
+  .safety-button small {
+    display: block;
+    margin-top: 0.14rem;
+    font-size: clamp(0.6rem, 2.75vmin, 0.72rem);
+    line-height: 1.1;
+  }
+
+  .rating-zone {
+    align-self: center;
+    gap: clamp(0.18rem, 0.9vmin, 0.32rem);
+    width: 100%;
+    height: min(68vmin, 17rem);
+    min-height: 0;
+    padding: clamp(0.32rem, 1.45vmin, 0.5rem);
+    border-radius: clamp(0.72rem, 3.1vmin, 1rem);
+  }
+
+  .rating-zone__heading {
+    gap: clamp(0.35rem, 1.5vmin, 0.55rem);
+  }
+
+  .rating-zone__heading span {
+    padding: 0.2rem 0.38rem;
+    font-size: clamp(0.45rem, 2.05vmin, 0.54rem);
+  }
+
+  .rating-zone__heading strong {
+    font-size: clamp(0.68rem, 3.1vmin, 0.82rem);
+  }
+
+  .ratings {
+    gap: clamp(0.08rem, 0.6vmin, 0.25rem);
+  }
+
+  .rating {
+    gap: clamp(0.22rem, 1.05vmin, 0.35rem);
+    padding: 0.18rem 0.05rem;
+  }
+
+  .face {
+    width: clamp(3.55rem, min(11vmax, 22vmin), 5.4rem);
+    border-width: clamp(0.2rem, 0.9vmin, 0.27rem);
+  }
+
+  .rating__label {
+    font-size: clamp(0.62rem, 2.85vmin, 0.76rem);
+  }
+
+  .kiosk-footer {
+    display: none;
   }
 }
