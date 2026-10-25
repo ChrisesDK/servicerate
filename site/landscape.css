@@ -1047,3 +1047,244 @@ html.is-mobile-landscape .rating-card {
     border-radius: 0;
   }
 }
+
+/*
+ * Keep the preferred two-column composition on every short screen. Earlier
+ * rules used a hard 500px switch with fixed-height, vertically centred panels;
+ * that made a screen only a few pixels shorter suddenly gain empty bands. All
+ * vertical sizing here follows the screen's short edge (`vmin`), so landscape
+ * phones and portrait phones rotated by the shell compress in the same way.
+ */
+@media (orientation: portrait),
+  (orientation: landscape) and (max-height: 600px) {
+  body {
+    background: var(--cream);
+  }
+
+  .kiosk-shell {
+    padding: 0;
+    place-content: stretch;
+    place-items: stretch;
+  }
+
+  .rating-card {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .kiosk-header {
+    position: static;
+    z-index: auto;
+    display: flex;
+    min-height: clamp(2.8rem, 17vmin, 5.4rem);
+    gap: clamp(0.5rem, 2vmin, 0.9rem);
+    padding: clamp(0.35rem, 1.7vmin, 0.6rem) clamp(0.75rem, 2.5vw, 2.1rem);
+    background: var(--wine-dark);
+    pointer-events: auto;
+  }
+
+  .brand {
+    display: flex;
+    min-width: 0;
+    flex: 0 1 auto;
+    gap: clamp(0.42rem, 1.8vmin, 0.7rem);
+  }
+
+  .brand > span:last-child {
+    display: block;
+    min-width: 0;
+  }
+
+  .brand__mark {
+    width: clamp(2rem, 9vmin, 3rem);
+    height: clamp(2rem, 9vmin, 3rem);
+  }
+
+  .brand__mark svg {
+    width: 66%;
+  }
+
+  .brand strong {
+    overflow: hidden;
+    font-size: clamp(0.85rem, 3.4vmin, 1.15rem);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand small {
+    display: block;
+    margin-top: 0.14rem;
+    overflow: hidden;
+    font-size: clamp(0.58rem, 2.2vmin, 0.8rem);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ticket {
+    display: grid;
+    min-width: clamp(6.2rem, 12vw, 10rem);
+    flex: 0 0 auto;
+    gap: 0;
+    padding: clamp(0.24rem, 1vmin, 0.4rem) clamp(0.5rem, 1.8vmin, 0.8rem);
+    border-width: 1px;
+    border-radius: clamp(0.55rem, 2.4vmin, 0.75rem);
+    background: rgba(255, 255, 255, 0.04);
+    text-align: center;
+  }
+
+  .ticket span,
+  .ticket strong {
+    display: block;
+    margin: 0;
+  }
+
+  .ticket span {
+    font-size: clamp(0.5rem, 2vmin, 0.68rem);
+    line-height: 1;
+  }
+
+  .ticket strong {
+    margin-top: 0.1rem;
+    font-size: clamp(1rem, 4.5vmin, 1.45rem);
+    line-height: 1;
+  }
+
+  .kiosk-content {
+    grid-row: auto;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.45fr);
+    align-items: stretch;
+    gap: clamp(0.65rem, 2.2vw, 2rem);
+    padding: clamp(0.38rem, 2.1vmin, 0.72rem) clamp(0.65rem, 2.5vw, 2.1rem);
+  }
+
+  .intro {
+    justify-content: space-between;
+    gap: clamp(0.38rem, 1.5vmin, 0.75rem);
+  }
+
+  .intro__heading {
+    display: block;
+  }
+
+  .intro__heading .eyebrow {
+    margin-bottom: clamp(0.2rem, 0.8vmin, 0.38rem);
+    font-size: clamp(0.54rem, 2.25vmin, 0.76rem);
+  }
+
+  h1 {
+    max-width: 9em;
+    font-size: clamp(1.8rem, 10.5vmin, 3.6rem);
+    line-height: 0.92;
+  }
+
+  .privacy-joke {
+    gap: clamp(0.45rem, 1.8vmin, 0.8rem);
+    padding: clamp(0.48rem, 1.9vmin, 0.9rem);
+    border-left-width: clamp(0.3rem, 0.9vmin, 0.5rem);
+    border-radius: clamp(0.7rem, 2.5vmin, 1rem);
+  }
+
+  .privacy-joke__mark {
+    width: clamp(2.2rem, 11vmin, 3.5rem);
+    height: clamp(2.2rem, 11vmin, 3.5rem);
+    font-size: clamp(1.25rem, 6vmin, 2rem);
+  }
+
+  .privacy-joke strong {
+    font-size: clamp(0.94rem, 3.6vmin, 1.4rem);
+  }
+
+  .privacy-joke p > span {
+    margin-top: clamp(0.12rem, 0.6vmin, 0.28rem);
+    font-size: clamp(0.7rem, 2.7vmin, 1rem);
+    line-height: 1.12;
+  }
+
+  .safety-button {
+    min-height: clamp(3.15rem, 12vmin, 4.3rem);
+    gap: clamp(0.45rem, 1.8vmin, 0.8rem);
+    padding: clamp(0.38rem, 1.6vmin, 0.62rem) clamp(0.58rem, 2vmin, 0.9rem);
+    border-radius: clamp(0.7rem, 2.5vmin, 1rem);
+  }
+
+  .safety-button__icon {
+    font-size: clamp(1.55rem, 7vmin, 2.35rem);
+  }
+
+  .safety-button strong {
+    font-size: clamp(0.88rem, 3.8vmin, 1.2rem);
+  }
+
+  .safety-button small {
+    display: block;
+    margin-top: 0.14rem;
+    font-size: clamp(0.64rem, 2.7vmin, 0.86rem);
+    line-height: 1.08;
+  }
+
+  .rating-zone {
+    align-self: stretch;
+    gap: clamp(0.2rem, 1vmin, 0.45rem);
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: clamp(0.38rem, 1.5vmin, 0.72rem);
+    border-radius: clamp(0.75rem, 3vmin, 1.25rem);
+  }
+
+  .rating-zone__heading {
+    gap: clamp(0.4rem, 1.6vmin, 0.7rem);
+  }
+
+  .rating-zone__heading span {
+    padding: 0.22rem 0.44rem;
+    font-size: clamp(0.48rem, 2.05vmin, 0.64rem);
+  }
+
+  .rating-zone__heading strong {
+    font-size: clamp(0.72rem, 3.15vmin, 0.98rem);
+  }
+
+  .ratings {
+    gap: clamp(0.08rem, 0.8vmin, 0.4rem);
+  }
+
+  .rating {
+    gap: clamp(0.24rem, 1.1vmin, 0.5rem);
+    padding: clamp(0.18rem, 0.7vmin, 0.35rem) 0.05rem;
+  }
+
+  .face {
+    width: clamp(3.5rem, min(11vw, 19vmin), 6.2rem);
+    border-width: clamp(0.2rem, 0.9vmin, 0.32rem);
+  }
+
+  .rating__label {
+    min-height: auto;
+    font-size: clamp(0.65rem, 2.9vmin, 0.9rem);
+  }
+
+  .kiosk-footer {
+    display: flex;
+    grid-row: auto;
+    min-height: clamp(1.75rem, 6.5vmin, 2.2rem);
+    margin: 0;
+    padding: clamp(0.24rem, 1vmin, 0.4rem) clamp(0.75rem, 2.5vw, 2rem);
+    font-size: clamp(0.66rem, 2.45vmin, 0.82rem);
+  }
+
+  .kiosk-footer strong {
+    display: initial;
+  }
+}
+
+/* Preserve the controls on the shortest legacy phones; the footer is optional. */
+@media (orientation: portrait) and (max-width: 350px),
+  (orientation: landscape) and (max-height: 350px) {
+  .kiosk-footer {
+    display: none;
+  }
+}
