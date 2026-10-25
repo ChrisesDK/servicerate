@@ -142,10 +142,10 @@ button {
   justify-content: center;
   gap: 0.42rem;
   padding: 0.45rem 0.75rem;
-  border: 2px solid #f0d6dd;
+  border: 2px solid #d88ba0;
   border-radius: 0.75rem;
-  color: var(--wine-dark);
-  background: var(--cream);
+  color: var(--cream);
+  background: var(--wine);
   cursor: pointer;
 }
 
@@ -467,7 +467,7 @@ h1 {
 }
 
 .qr-view__copy h3 {
-  margin-top: 0.15rem;
+  margin-top: 0;
   font-size: clamp(2rem, 7vmin, 4rem);
 }
 
@@ -475,8 +475,16 @@ h1 {
   outline: none;
 }
 
+.qr-handle {
+  margin: clamp(0.3rem, 1.2vmin, 0.5rem) 0 0;
+  color: var(--wine);
+  font-size: clamp(0.78rem, 2.6vmin, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
 .back-button {
-  margin-bottom: clamp(0.65rem, 2vmin, 1rem);
+  margin-bottom: clamp(1.15rem, 4vmin, 1.8rem);
   padding: 0.5rem 0.75rem;
   border: 2px solid var(--wine);
   border-radius: 999px;
@@ -489,25 +497,12 @@ h1 {
 
 .qr-art {
   display: grid;
-  width: min(100%, 22rem, 61vmin);
-  aspect-ratio: 1170 / 1344;
+  width: min(100%, 22rem, 72vmin);
+  aspect-ratio: 1;
   justify-self: center;
   overflow: hidden;
   border-radius: 0;
   background: #fff;
-}
-
-.qr-art::after {
-  z-index: 2;
-  grid-area: 1 / 1;
-  border: 6px solid #fff;
-  background:
-    linear-gradient(#fff, #fff) left top / 1.5rem 1.5rem no-repeat,
-    linear-gradient(#fff, #fff) right top / 1.5rem 1.5rem no-repeat,
-    linear-gradient(#fff, #fff) left bottom / 1.5rem 1.5rem no-repeat,
-    linear-gradient(#fff, #fff) right bottom / 1.5rem 1.5rem no-repeat;
-  content: "";
-  pointer-events: none;
 }
 
 .qr-art img,
