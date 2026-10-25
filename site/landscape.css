@@ -729,21 +729,17 @@ h1 {
 @media (orientation: portrait) and (max-width: 600px),
   (orientation: landscape) and (max-height: 500px) {
   body {
-    background: #160b18;
+    background: var(--cream);
   }
 
   .kiosk-shell {
-    padding:
-      max(0.3rem, env(safe-area-inset-top))
-      max(0.3rem, env(safe-area-inset-right))
-      max(0.3rem, env(safe-area-inset-bottom))
-      max(0.3rem, env(safe-area-inset-left));
+    padding: 0;
   }
 
   .rating-card {
     grid-template-rows: auto minmax(0, 1fr);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: clamp(0.75rem, 3.2vmin, 1rem);
+    border: 0;
+    border-radius: 0;
   }
 
   .kiosk-header {
@@ -753,7 +749,11 @@ h1 {
     min-height: 0;
     flex: 0 0 auto;
     gap: clamp(0.45rem, 1.8vmin, 0.75rem);
-    padding: clamp(0.32rem, 1.3vmin, 0.48rem) clamp(0.55rem, 2.1vmin, 0.85rem);
+    padding:
+      max(clamp(0.32rem, 1.3vmin, 0.48rem), env(safe-area-inset-top))
+      max(clamp(0.55rem, 2.1vmin, 0.85rem), env(safe-area-inset-right))
+      clamp(0.32rem, 1.3vmin, 0.48rem)
+      max(clamp(0.55rem, 2.1vmin, 0.85rem), env(safe-area-inset-left));
     background: var(--wine-dark);
     pointer-events: auto;
   }
@@ -829,7 +829,11 @@ h1 {
     grid-template-columns: minmax(11.8rem, 0.82fr) minmax(0, 1.45fr);
     align-items: center;
     gap: clamp(0.5rem, 2.2vmin, 0.8rem);
-    padding: clamp(0.42rem, 1.9vmin, 0.68rem);
+    padding:
+      clamp(0.42rem, 1.9vmin, 0.68rem)
+      max(clamp(0.42rem, 1.9vmin, 0.68rem), env(safe-area-inset-right))
+      max(clamp(0.42rem, 1.9vmin, 0.68rem), env(safe-area-inset-bottom))
+      max(clamp(0.42rem, 1.9vmin, 0.68rem), env(safe-area-inset-left));
   }
 
   .intro {
@@ -940,5 +944,30 @@ h1 {
 
   .kiosk-footer {
     display: none;
+  }
+}
+
+/* Installed shortcuts should always occupy the complete application viewport. */
+@media (display-mode: fullscreen), (display-mode: standalone) {
+  html,
+  body,
+  .kiosk-shell {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--cream);
+  }
+
+  .rating-card {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
   }
 }
