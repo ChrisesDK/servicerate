@@ -1,8 +1,4 @@
 const ratingButtons = [...document.querySelectorAll("[data-rating]")];
-const feedback = document.querySelector("#feedback");
-const feedbackKicker = document.querySelector("#feedback-kicker");
-const feedbackTitle = document.querySelector("#feedback-title");
-const feedbackCopy = document.querySelector("#feedback-copy");
 const batSwarm = document.querySelector("#bat-swarm");
 const victimNumber = document.querySelector("#victim-number");
 const ticketCaption = document.querySelector("#ticket-caption");
@@ -10,32 +6,8 @@ const garlicButton = document.querySelector("#garlic-button");
 const garlicAlert = document.querySelector("#garlic-alert");
 const dismissGarlic = document.querySelector("#dismiss-garlic");
 
-const counterKey = "vfs-serving-count-v2";
-let servingNumber = Number.parseInt(sessionStorage.getItem(counterKey) ?? "1", 10);
-let feedbackResetTimer;
-
-if (!Number.isFinite(servingNumber) || servingNumber < 1) {
-  servingNumber = 1;
-}
-
-const responses = {
-  awful: {
-    title: "That really bites.",
-    copy: "A manager will rise from their coffin shortly.",
-  },
-  meh: {
-    title: "Thanks for the honest feed-back.",
-    copy: "We'll sharpen our fangs before your next visit.",
-  },
-  good: {
-    title: "Bloody good!",
-    copy: "Almost worth writing home to Transylvania about.",
-  },
-  great: {
-    title: "Fang-tastic!",
-    copy: "100 imaginary O-positive points are yours.",
-  },
-};
+let servingNumber = 1;
+let selectionResetTimer;
 
 const formatVictimNumber = (number) => `V-${String(number).padStart(3, "0")}`;
 
@@ -65,12 +37,8 @@ const releaseBats = () => {
 
 const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
-  const response = responses[selectedRating];
-  const ratedNumber = servingNumber;
 
   servingNumber += 1;
-  sessionStorage.setItem(counterKey, String(servingNumber));
-  feedbackKicker.textContent = `${formatVictimNumber(ratedNumber)} logged`;
   showServingNumber("Next fanged customer");
 
   ratingButtons.forEach((item) => {
@@ -79,12 +47,8 @@ const chooseRating = (button) => {
     item.setAttribute("aria-pressed", String(isSelected));
   });
 
-  feedbackTitle.textContent = response.title;
-  feedbackCopy.textContent = response.copy;
-  feedback.dataset.rating = selectedRating;
-
-  window.clearTimeout(feedbackResetTimer);
-  feedbackResetTimer = window.setTimeout(resetRating, 1800);
+  window.clearTimeout(selectionResetTimer);
+  selectionResetTimer = window.setTimeout(resetRating, 1100);
 
   if (selectedRating === "good" || selectedRating === "great") {
     releaseBats();
@@ -96,10 +60,6 @@ const resetRating = () => {
     button.classList.remove("is-selected");
     button.setAttribute("aria-pressed", "false");
   });
-  feedbackKicker.textContent = "Feed-back desk";
-  feedbackTitle.textContent = "Awaiting your verdict";
-  feedbackCopy.textContent = "Choose carefully. The night shift is listening.";
-  delete feedback.dataset.rating;
   showServingNumber();
 };
 

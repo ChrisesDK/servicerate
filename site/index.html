@@ -53,7 +53,6 @@
             <div class="intro__heading">
               <p class="eyebrow">A quick bite of feed-back</p>
               <h1 id="page-title">Please rate our service today</h1>
-              <p class="intro__copy">Point to a face. We promise not to take it personally.</p>
             </div>
 
             <blockquote class="privacy-joke">
@@ -64,13 +63,13 @@
               </p>
             </blockquote>
 
-            <div class="feedback" id="feedback" aria-live="polite">
-              <div>
-                <span class="feedback__kicker" id="feedback-kicker">Feed-back desk</span>
-                <strong id="feedback-title">Awaiting your verdict</strong>
-                <p id="feedback-copy">Choose carefully. The night shift is listening.</p>
-              </div>
-            </div>
+            <button class="safety-button" id="garlic-button" type="button">
+              <span class="safety-button__icon" aria-hidden="true">&#129476;</span>
+              <span>
+                <strong>Bite escape</strong>
+                <small>Tap to take this neck off tonight&rsquo;s menu</small>
+              </span>
+            </button>
           </section>
 
           <section class="rating-zone" aria-label="Rate the service">
@@ -113,14 +112,6 @@
               </button>
             </div>
 
-            <button class="safety-button" id="garlic-button" type="button">
-              <span class="safety-button__icon" aria-hidden="true">&#129476;</span>
-              <span>
-                <strong>Bite escape</strong>
-                <small>Tap to take this neck off tonight&rsquo;s menu</small>
-              </span>
-              <span class="safety-button__badge">Safety</span>
-            </button>
           </section>
         </div>
 
@@ -129,7 +120,6 @@
             <span class="status-dot" aria-hidden="true"></span>
             Night shift online until sunrise
           </p>
-          <strong>No garlic was harmed in this survey</strong>
         </footer>
       </section>
     </main>
@@ -142,9 +132,7 @@
         <div>
           <p class="eyebrow">Human safety protocol activated</p>
           <h2 id="garlic-title">Bite officially cancelled.</h2>
-          <p>This neck is off the menu. No appeals, no nibbling, and no &ldquo;just a little taste.&rdquo;</p>
-          <strong class="garlic-alert__status">Garlic perimeter active &middot; 100% bite-free</strong>
-          <button id="dismiss-garlic" type="button">We&rsquo;re safe &mdash; return to kiosk</button>
+          <button id="dismiss-garlic" type="button">Return to kiosk</button>
         </div>
       </div>
     </div>

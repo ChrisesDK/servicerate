@@ -222,7 +222,7 @@ h1 {
   min-width: 0;
   min-height: 0;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   gap: clamp(0.4rem, 1.4vh, 0.85rem);
   padding: clamp(0.65rem, 1.5vmin, 1.15rem);
   border: 2px solid #e7d8c4;
@@ -256,9 +256,11 @@ h1 {
 
 .ratings {
   display: grid;
+  flex: 1;
   min-height: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
+  align-content: center;
   gap: clamp(0.2rem, 1vw, 0.8rem);
   padding: 0;
 }
@@ -288,8 +290,8 @@ h1 {
 
 .safety-button {
   display: grid;
-  min-height: clamp(3.3rem, 8.5vh, 5rem);
-  grid-template-columns: auto 1fr auto;
+  min-height: clamp(3.4rem, 9.5vh, 4.75rem);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   gap: clamp(0.55rem, 1.4vw, 0.95rem);
   width: 100%;
@@ -331,17 +333,8 @@ h1 {
   font-weight: 650;
 }
 
-.safety-button__badge {
-  padding: 0.34rem 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  border-radius: 999px;
-  font-size: clamp(0.62rem, 1.05vw, 0.76rem);
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .kiosk-footer {
+  justify-content: flex-start;
   min-height: clamp(2.4rem, 6.5vh, 3.4rem);
   margin: 0;
   padding: 0.45rem clamp(1rem, 2.6vw, 2.5rem);
@@ -616,7 +609,7 @@ h1 {
   }
 
   .safety-button {
-    min-height: 2.75rem;
+    min-height: 3.4rem;
     padding: 0.34rem 0.6rem;
   }
 
@@ -630,10 +623,6 @@ h1 {
 
   .safety-button small {
     display: none;
-  }
-
-  .safety-button__badge {
-    font-size: 0.56rem;
   }
 
   .kiosk-footer {
@@ -670,8 +659,31 @@ h1 {
     grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.45fr);
   }
 
-  .safety-button__badge,
   .kiosk-footer strong {
     display: none;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1400px) {
+  body {
+    background: var(--cream);
+  }
+
+  .ambient {
+    display: none;
+  }
+
+  .kiosk-shell {
+    padding: 0;
+  }
+
+  .rating-card {
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    max-width: none;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
   }
 }
