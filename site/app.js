@@ -1,3 +1,23 @@
+const isMobileKiosk =
+  /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+  navigator.userAgentData?.mobile === true;
+
+document.documentElement.classList.toggle("is-mobile-kiosk", isMobileKiosk);
+
+const syncMobileOrientation = () => {
+  const screenIsLandscape = screen.orientation?.type?.startsWith("landscape") ?? false;
+  const viewportIsLandscape = window.innerWidth > window.innerHeight;
+
+  document.documentElement.classList.toggle(
+    "is-mobile-landscape",
+    isMobileKiosk && (screenIsLandscape || viewportIsLandscape),
+  );
+};
+
+syncMobileOrientation();
+window.addEventListener("resize", syncMobileOrientation);
+screen.orientation?.addEventListener?.("change", syncMobileOrientation);
+
 const ratingButtons = [...document.querySelectorAll("[data-rating]")];
 const batSwarm = document.querySelector("#bat-swarm");
 const victimNumber = document.querySelector("#victim-number");
@@ -10,7 +30,8 @@ let servingNumber = 1;
 let selectionResetTimer;
 
 const tryEnterFullscreen = () => {
-  const isCompactDevice = window.matchMedia("(max-width: 900px), (max-height: 500px)").matches;
+  const isCompactDevice =
+    isMobileKiosk || window.matchMedia("(max-width: 900px), (max-height: 500px)").matches;
 
   if (!isCompactDevice || document.fullscreenElement || !document.documentElement.requestFullscreen) return;
 
