@@ -16,10 +16,6 @@ body {
   display: none;
 }
 
-.compact-title {
-  display: none;
-}
-
 .kiosk-shell {
   display: grid;
   width: 100%;
@@ -732,8 +728,22 @@ h1 {
  */
 @media (orientation: portrait) and (max-width: 600px),
   (orientation: landscape) and (max-height: 500px) {
+  body {
+    background: #160b18;
+  }
+
+  .kiosk-shell {
+    padding:
+      max(0.3rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      max(0.3rem, env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
   .rating-card {
     grid-template-rows: auto minmax(0, 1fr);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: clamp(0.75rem, 3.2vmin, 1rem);
   }
 
   .kiosk-header {
@@ -750,11 +760,14 @@ h1 {
 
   .brand {
     display: flex;
+    min-width: 0;
     flex: 0 0 auto;
+    gap: clamp(0.38rem, 1.6vmin, 0.58rem);
   }
 
   .brand > span:last-child {
-    display: none;
+    display: block;
+    min-width: 0;
   }
 
   .brand__mark {
@@ -766,33 +779,19 @@ h1 {
     width: 66%;
   }
 
-  .compact-title {
-    display: grid;
-    min-width: 0;
-    margin-right: auto;
-    line-height: 1;
-  }
-
-  .compact-title small,
-  .compact-title strong {
-    display: block;
-  }
-
-  .compact-title small {
-    align-self: end;
-    color: #d8bdca;
-    font-size: clamp(0.48rem, 2.25vmin, 0.62rem);
-    font-weight: 850;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .compact-title strong {
-    align-self: start;
-    margin-top: 0.13rem;
+  .brand strong {
     overflow: hidden;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(0.88rem, 4.1vmin, 1.08rem);
+    font-size: clamp(0.72rem, 3.4vmin, 0.9rem);
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand small {
+    display: block;
+    margin-top: 0.12rem;
+    overflow: hidden;
+    font-size: clamp(0.5rem, 2.35vmin, 0.62rem);
     line-height: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -827,7 +826,7 @@ h1 {
 
   .kiosk-content {
     grid-row: 2;
-    grid-template-columns: minmax(10.5rem, 0.72fr) minmax(0, 1.65fr);
+    grid-template-columns: minmax(11.8rem, 0.82fr) minmax(0, 1.45fr);
     align-items: center;
     gap: clamp(0.5rem, 2.2vmin, 0.8rem);
     padding: clamp(0.42rem, 1.9vmin, 0.68rem);
@@ -835,11 +834,22 @@ h1 {
 
   .intro {
     justify-content: center;
-    gap: clamp(0.42rem, 1.7vmin, 0.65rem);
+    gap: clamp(0.34rem, 1.45vmin, 0.55rem);
   }
 
   .intro__heading {
-    display: none;
+    display: block;
+  }
+
+  .intro__heading .eyebrow {
+    margin-bottom: clamp(0.18rem, 0.75vmin, 0.28rem);
+    font-size: clamp(0.48rem, 2.2vmin, 0.58rem);
+  }
+
+  h1 {
+    max-width: 9em;
+    font-size: clamp(1.4rem, 7.5vmin, 2rem);
+    line-height: 0.92;
   }
 
   .privacy-joke {
