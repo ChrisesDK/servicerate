@@ -1,0 +1,17 @@
+{
+  "name": "Vampire Food Services Rating Kiosk",
+  "short_name": "Vampire Rating",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#160b18",
+  "theme_color": "#3a0f23",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

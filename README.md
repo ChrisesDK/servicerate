@@ -1,6 +1,8 @@
 # Service Rate
 
-A small, spooky service-rating kiosk built as a Halloween costume prop. Visitors can rate Vampire Food Services using four faces, receive a suitably undead response, and activate the Emergency Garlic button when necessary.
+A small, spooky service-rating kiosk built as a Halloween costume prop. Guests can rate Vampire Food Services using four large faces, receive a suitably undead response, and activate the Bite Escape safety protocol when necessary.
+
+The kiosk is designed for phones and tablets in landscape orientation. Portrait screens show a rotation prompt. The “Now serving” number starts at `V-001` for each browser-tab session and advances once per submitted rating.
 
 ## Live site
 

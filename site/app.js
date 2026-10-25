@@ -1,13 +1,23 @@
 const ratingButtons = [...document.querySelectorAll("[data-rating]")];
 const feedback = document.querySelector("#feedback");
+const feedbackKicker = document.querySelector("#feedback-kicker");
 const feedbackTitle = document.querySelector("#feedback-title");
 const feedbackCopy = document.querySelector("#feedback-copy");
 const rateAgainButton = document.querySelector("#rate-again");
 const batSwarm = document.querySelector("#bat-swarm");
 const victimNumber = document.querySelector("#victim-number");
+const ticketCaption = document.querySelector("#ticket-caption");
 const garlicButton = document.querySelector("#garlic-button");
 const garlicAlert = document.querySelector("#garlic-alert");
 const dismissGarlic = document.querySelector("#dismiss-garlic");
+
+const counterKey = "vfs-serving-count-v2";
+let servingNumber = Number.parseInt(sessionStorage.getItem(counterKey) ?? "1", 10);
+let ratingSubmitted = false;
+
+if (!Number.isFinite(servingNumber) || servingNumber < 1) {
+  servingNumber = 1;
+}
 
 const responses = {
   awful: {
@@ -24,19 +34,15 @@ const responses = {
   },
   great: {
     title: "Fang-tastic!",
-    copy: "You've earned 100 imaginary O-positive loyalty points.",
+    copy: "100 imaginary O-positive points are yours.",
   },
 };
 
-const setVictimNumber = () => {
-  let number = sessionStorage.getItem("vfs-victim-number");
+const formatVictimNumber = (number) => `V-${String(number).padStart(3, "0")}`;
 
-  if (!number) {
-    number = String(Math.floor(Math.random() * 900) + 100);
-    sessionStorage.setItem("vfs-victim-number", number);
-  }
-
-  victimNumber.textContent = `V-${number}`;
+const showServingNumber = (caption = "Now serving") => {
+  ticketCaption.textContent = caption;
+  victimNumber.textContent = formatVictimNumber(servingNumber);
 };
 
 const releaseBats = () => {
@@ -62,6 +68,15 @@ const chooseRating = (button) => {
   const selectedRating = button.dataset.rating;
   const response = responses[selectedRating];
 
+  if (!ratingSubmitted) {
+    const ratedNumber = servingNumber;
+    servingNumber += 1;
+    sessionStorage.setItem(counterKey, String(servingNumber));
+    ratingSubmitted = true;
+    feedbackKicker.textContent = `${formatVictimNumber(ratedNumber)} logged`;
+    showServingNumber("Next serving");
+  }
+
   ratingButtons.forEach((item) => {
     const isSelected = item === button;
     item.classList.toggle("is-selected", isSelected);
@@ -83,10 +98,13 @@ const resetRating = () => {
     button.classList.remove("is-selected");
     button.setAttribute("aria-pressed", "false");
   });
-  feedbackTitle.textContent = "Your opinion matters";
-  feedbackCopy.textContent = "All ratings are anonymous. Blood type is not.";
+  feedbackKicker.textContent = "Feed-back desk";
+  feedbackTitle.textContent = "Awaiting your verdict";
+  feedbackCopy.textContent = "Choose carefully. The night shift is listening.";
   delete feedback.dataset.rating;
   rateAgainButton.hidden = true;
+  ratingSubmitted = false;
+  showServingNumber();
   ratingButtons[0].focus();
 };
 
@@ -117,4 +135,4 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !garlicAlert.hidden) closeGarlicAlert();
 });
 
-setVictimNumber();
+showServingNumber();
