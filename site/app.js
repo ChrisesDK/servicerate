@@ -212,11 +212,11 @@ const startQrAnimation = async (maskSource, seed) => {
     paintCanvas.height = renderHeight;
 
     const blobs = [
-      { x: 0.16, y: 0.18, radius: 0.36, speed: 0.00082, drift: 0.3, phase: 0.3 + seed },
-      { x: 0.76, y: 0.2, radius: 0.32, speed: 0.00073, drift: 0.3, phase: 2.1 + seed },
-      { x: 0.44, y: 0.54, radius: 0.4, speed: 0.00078, drift: 0.32, phase: 4.4 + seed },
-      { x: 0.82, y: 0.75, radius: 0.34, speed: 0.00091, drift: 0.25, phase: 5.6 + seed },
-      { x: 0.2, y: 0.82, radius: 0.3, speed: 0.00096, drift: 0.23, phase: 3.2 + seed },
+      { x: 0.16, y: 0.18, radius: 0.36, speed: 0.00128, drift: 0.3, phase: 0.3 + seed },
+      { x: 0.76, y: 0.2, radius: 0.32, speed: 0.00114, drift: 0.3, phase: 2.1 + seed },
+      { x: 0.44, y: 0.54, radius: 0.4, speed: 0.00122, drift: 0.32, phase: 4.4 + seed },
+      { x: 0.82, y: 0.75, radius: 0.34, speed: 0.00142, drift: 0.25, phase: 5.6 + seed },
+      { x: 0.2, y: 0.82, radius: 0.3, speed: 0.0015, drift: 0.23, phase: 3.2 + seed },
     ];
     let previousFrame = 0;
 
@@ -233,9 +233,9 @@ const startQrAnimation = async (maskSource, seed) => {
       paintContext.clearRect(0, 0, renderWidth, renderHeight);
 
       const base = paintContext.createLinearGradient(0, 0, renderWidth, renderHeight);
-      base.addColorStop(0, "#29060f");
-      base.addColorStop(0.52, "#4a0b1c");
-      base.addColorStop(1, "#340713");
+      base.addColorStop(0, "#26040c");
+      base.addColorStop(0.52, "#640016");
+      base.addColorStop(1, "#360610");
       paintContext.fillStyle = base;
       paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
@@ -245,7 +245,7 @@ const startQrAnimation = async (maskSource, seed) => {
         const y = (blob.y + Math.cos(angle * 0.91) * blob.drift) * renderHeight;
         const radius = blob.radius * Math.min(renderWidth, renderHeight);
         const gradient = paintContext.createRadialGradient(x, y, 0, x, y, radius);
-        const color = index % 2 === 0 ? "181, 16, 59" : "111, 7, 34";
+        const color = index % 2 === 0 ? "232, 59, 83" : "111, 0, 27";
         gradient.addColorStop(0, `rgba(${color}, 1)`);
         gradient.addColorStop(0.58, `rgba(${color}, 0.96)`);
         gradient.addColorStop(1, `rgba(${color}, 0)`);
@@ -253,7 +253,7 @@ const startQrAnimation = async (maskSource, seed) => {
         paintContext.fillRect(0, 0, renderWidth, renderHeight);
       });
 
-      const sweepProgress = (time * 0.00018 + seed * 0.13) % 1.6 - 0.3;
+      const sweepProgress = (time * 0.00032 + seed * 0.13) % 1.6 - 0.3;
       const sweepX = sweepProgress * renderWidth;
       const sweepRadius = renderWidth * 0.32;
       const sweep = paintContext.createLinearGradient(
@@ -262,11 +262,11 @@ const startQrAnimation = async (maskSource, seed) => {
         sweepX + sweepRadius,
         renderHeight,
       );
-      sweep.addColorStop(0, "rgba(196, 20, 65, 0)");
-      sweep.addColorStop(0.42, "rgba(196, 20, 65, 0.15)");
-      sweep.addColorStop(0.5, "rgba(196, 20, 65, 1)");
-      sweep.addColorStop(0.58, "rgba(196, 20, 65, 0.15)");
-      sweep.addColorStop(1, "rgba(196, 20, 65, 0)");
+      sweep.addColorStop(0, "rgba(245, 70, 86, 0)");
+      sweep.addColorStop(0.42, "rgba(245, 70, 86, 0.22)");
+      sweep.addColorStop(0.5, "rgba(245, 70, 86, 1)");
+      sweep.addColorStop(0.58, "rgba(245, 70, 86, 0.22)");
+      sweep.addColorStop(1, "rgba(245, 70, 86, 0)");
       paintContext.fillStyle = sweep;
       paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
