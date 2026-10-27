@@ -198,7 +198,7 @@ const startQrAnimation = async (maskSource, seed) => {
     const mask = await loadQrMask(maskSource);
     if (token !== qrAnimationToken || qrView.hidden) return;
 
-    const renderWidth = Math.min(720, mask.naturalWidth);
+    const renderWidth = Math.min(640, mask.naturalWidth);
     const renderHeight = Math.round(renderWidth * (mask.naturalHeight / mask.naturalWidth));
     const paintCanvas = document.createElement("canvas");
     const paintContext = paintCanvas.getContext("2d");
@@ -212,63 +212,65 @@ const startQrAnimation = async (maskSource, seed) => {
     paintCanvas.height = renderHeight;
 
     const blobs = [
-      { x: 0.16, y: 0.18, radius: 0.36, speed: 0.00128, drift: 0.3, phase: 0.3 + seed },
-      { x: 0.76, y: 0.2, radius: 0.32, speed: 0.00114, drift: 0.3, phase: 2.1 + seed },
-      { x: 0.44, y: 0.54, radius: 0.4, speed: 0.00122, drift: 0.32, phase: 4.4 + seed },
-      { x: 0.82, y: 0.75, radius: 0.34, speed: 0.00142, drift: 0.25, phase: 5.6 + seed },
-      { x: 0.2, y: 0.82, radius: 0.3, speed: 0.0015, drift: 0.23, phase: 3.2 + seed },
+      { anchorX: 0.16, drift: 0.14, span: 0.46, radius: 0.34, period: 8200, phase: 0.4 + seed, color: "232, 59, 83" },
+      { anchorX: 0.76, drift: 0.13, span: 0.43, radius: 0.31, period: 9400, phase: 2.2 + seed, color: "139, 4, 39" },
+      { anchorX: 0.46, drift: 0.16, span: 0.4, radius: 0.38, period: 10400, phase: 4.5 + seed, color: "232, 59, 83" },
+      { anchorX: 0.82, drift: 0.1, span: 0.45, radius: 0.32, period: 8800, phase: 5.7 + seed, color: "111, 0, 27" },
+      { anchorX: 0.24, drift: 0.12, span: 0.42, radius: 0.29, period: 9900, phase: 3.3 + seed, color: "200, 25, 58" },
     ];
-    let previousFrame = 0;
+    const fullTurn = Math.PI * 2;
+    let previousFrameTime;
+    let motionTime = 0;
 
     const drawFrame = (time) => {
       if (token !== qrAnimationToken || qrView.hidden) return;
 
-      if (time - previousFrame < 32) {
-        qrAnimationFrame = window.requestAnimationFrame(drawFrame);
-        return;
-      }
-      previousFrame = time;
+      // Advance on every display frame. Capping a delayed frame prevents a
+      // visible jump when the tab or installed app returns from the background.
+      const elapsed = previousFrameTime === undefined ? 0 : Math.min(time - previousFrameTime, 34);
+      previousFrameTime = time;
+      motionTime += elapsed;
 
       paintContext.globalCompositeOperation = "source-over";
       paintContext.clearRect(0, 0, renderWidth, renderHeight);
 
       const base = paintContext.createLinearGradient(0, 0, renderWidth, renderHeight);
       base.addColorStop(0, "#26040c");
-      base.addColorStop(0.52, "#640016");
-      base.addColorStop(1, "#360610");
+      base.addColorStop(0.52, "#590014");
+      base.addColorStop(1, "#31050e");
       paintContext.fillStyle = base;
       paintContext.fillRect(0, 0, renderWidth, renderHeight);
 
-      blobs.forEach((blob, index) => {
-        const angle = time * blob.speed + blob.phase;
-        const x = (blob.x + Math.sin(angle * 1.13) * blob.drift) * renderWidth;
-        const y = (blob.y + Math.cos(angle * 0.91) * blob.drift) * renderHeight;
+      // Soft, overlapping ellipses use different loop lengths and curved paths.
+      // Screen blending makes neighboring blobs flow together like a lava lamp.
+      paintContext.globalCompositeOperation = "screen";
+      blobs.forEach((blob) => {
+        const angle = (motionTime / blob.period) * fullTurn + blob.phase;
+        const wobble = Math.sin(angle * 2 + blob.phase) * blob.drift * 0.34;
+        const x = (blob.anchorX + Math.sin(angle) * blob.drift + wobble) * renderWidth;
+        const y = (0.5 + Math.cos(angle) * blob.span) * renderHeight;
+        const pulse = Math.sin(angle * 2.1 + blob.phase);
         const radius = blob.radius * Math.min(renderWidth, renderHeight);
-        const gradient = paintContext.createRadialGradient(x, y, 0, x, y, radius);
-        const color = index % 2 === 0 ? "232, 59, 83" : "111, 0, 27";
-        gradient.addColorStop(0, `rgba(${color}, 1)`);
-        gradient.addColorStop(0.58, `rgba(${color}, 0.96)`);
-        gradient.addColorStop(1, `rgba(${color}, 0)`);
-        paintContext.fillStyle = gradient;
-        paintContext.fillRect(0, 0, renderWidth, renderHeight);
-      });
+        const width = radius * (0.82 - pulse * 0.07);
+        const height = radius * (1.18 + pulse * 0.13);
+        const rotation = Math.sin(angle + blob.phase) * 0.2;
 
-      const sweepProgress = (time * 0.00032 + seed * 0.13) % 1.6 - 0.3;
-      const sweepX = sweepProgress * renderWidth;
-      const sweepRadius = renderWidth * 0.32;
-      const sweep = paintContext.createLinearGradient(
-        sweepX - sweepRadius,
-        0,
-        sweepX + sweepRadius,
-        renderHeight,
-      );
-      sweep.addColorStop(0, "rgba(245, 70, 86, 0)");
-      sweep.addColorStop(0.42, "rgba(245, 70, 86, 0.22)");
-      sweep.addColorStop(0.5, "rgba(245, 70, 86, 1)");
-      sweep.addColorStop(0.58, "rgba(245, 70, 86, 0.22)");
-      sweep.addColorStop(1, "rgba(245, 70, 86, 0)");
-      paintContext.fillStyle = sweep;
-      paintContext.fillRect(0, 0, renderWidth, renderHeight);
+        paintContext.save();
+        paintContext.translate(x, y);
+        paintContext.rotate(rotation);
+        paintContext.scale(width, height);
+        const glow = paintContext.createRadialGradient(0, 0, 0, 0, 0, 1);
+        glow.addColorStop(0, `rgba(${blob.color}, 1)`);
+        glow.addColorStop(0.42, `rgba(${blob.color}, 0.96)`);
+        glow.addColorStop(0.76, `rgba(${blob.color}, 0.62)`);
+        glow.addColorStop(1, `rgba(${blob.color}, 0)`);
+        paintContext.fillStyle = glow;
+        paintContext.beginPath();
+        paintContext.arc(0, 0, 1, 0, fullTurn);
+        paintContext.fill();
+        paintContext.restore();
+      });
+      paintContext.globalCompositeOperation = "source-over";
 
       // The moving color field is clipped by the original QR ink. The mask is
       // never transformed, faded, or animated, so the scannable geometry stays fixed.
