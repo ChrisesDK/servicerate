@@ -18,8 +18,8 @@
     <link rel="icon" href="favicon.svg?v=24" type="image/svg+xml" />
     <link rel="manifest" href="manifest.webmanifest?v=24" />
     <link rel="stylesheet" href="styles.css?v=24" />
-    <link rel="stylesheet" href="kiosk.css?v=26" />
-    <script src="app.js?v=24" defer></script>
+    <link rel="stylesheet" href="kiosk.css?v=27" />
+    <script src="app.js?v=27" defer></script>
   </head>
   <body>
     <div class="ambient ambient--one" aria-hidden="true"></div>
@@ -88,13 +88,19 @@
               </button>
             </div>
 
-            <p class="soft-authority-badge">
+            <button
+              class="soft-authority-badge"
+              id="authority-report-button"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="authority-modal"
+            >
               <span class="soft-authority-face" aria-hidden="true">
                 <span class="soft-authority-face__eyes"></span>
                 <span class="soft-authority-face__mouth"></span>
               </span>
               <span>Blødevarestyrelsen</span>
-            </p>
+            </button>
 
           </section>
         </div>
@@ -179,6 +185,77 @@
             <img id="qr-image" src="" alt="" />
             <canvas id="qr-canvas" aria-hidden="true"></canvas>
           </div>
+        </div>
+      </section>
+    </div>
+
+    <div
+      class="menu-modal authority-modal"
+      id="authority-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="authority-title"
+      aria-describedby="authority-disclaimer"
+      hidden
+    >
+      <section class="menu-dialog authority-dialog">
+        <header class="menu-dialog__header authority-dialog__header">
+          <div class="authority-heading">
+            <span>Blødevarestyrelsen</span>
+            <h2 id="authority-title">Kontrolrapport</h2>
+          </div>
+          <button
+            class="icon-button"
+            id="close-authority-report"
+            type="button"
+            aria-label="Luk kontrolrapport"
+          >×</button>
+        </header>
+
+        <div class="authority-report">
+          <section class="report-summary" aria-label="Kontrolresultat">
+            <div class="report-result">
+              <span class="soft-authority-face soft-authority-face--report" aria-hidden="true">
+                <span class="soft-authority-face__eyes"></span>
+                <span class="soft-authority-face__mouth"></span>
+              </span>
+              <div>
+                <span class="report-kicker">Kontrolresultat</span>
+                <strong>Glad smiley</strong>
+              </div>
+            </div>
+
+            <dl class="report-meta">
+              <dt>Virksomhed</dt>
+              <dd>Snacks for Vampires</dd>
+              <dt>Kontroltype</dt>
+              <dd>Uanmeldt nattebesøg</dd>
+              <dt>Journalnr.</dt>
+              <dd>BLØD-V-001</dd>
+            </dl>
+
+            <div class="report-stamp" aria-label="Godkendt med bid">
+              <strong>Godkendt</strong>
+              <span>med bid</span>
+            </div>
+          </section>
+
+          <section class="report-findings" aria-labelledby="findings-title">
+            <h3 id="findings-title">Kontrolpunkter</h3>
+            <ul class="findings-list">
+              <li><span>Kistekøling</span><strong>Tilfredsstillende</strong></li>
+              <li><span>Hugtandshygiejne</span><strong>Tilfredsstillende</strong></li>
+              <li><span>Mærkning af blodtype</span><strong>Godkendt</strong></li>
+              <li><span>Adgang til hvidløg</span><strong>Tydeligt skiltet</strong></li>
+            </ul>
+            <p class="report-note">
+              <strong>Bemærkning:</strong> Menuen indeholder overraskende lidt blødevare.
+            </p>
+          </section>
+
+          <p class="report-disclaimer" id="authority-disclaimer">
+            Uofficiel parodi · ikke en rapport fra Fødevarestyrelsen · senest kontrolleret i nat kl. 00.01
+          </p>
         </div>
       </section>
     </div>

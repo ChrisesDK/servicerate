@@ -25,6 +25,9 @@ const ticketCaption = document.querySelector("#ticket-caption");
 const menuButton = document.querySelector("#menu-button");
 const menuModal = document.querySelector("#menu-modal");
 const closeMenuButton = document.querySelector("#close-menu");
+const authorityReportButton = document.querySelector("#authority-report-button");
+const authorityModal = document.querySelector("#authority-modal");
+const closeAuthorityReportButton = document.querySelector("#close-authority-report");
 const menuHome = document.querySelector("#menu-home");
 const qrView = document.querySelector("#qr-view");
 const qrName = document.querySelector("#qr-name");
@@ -316,6 +319,18 @@ const closeMenu = () => {
   menuButton.focus();
 };
 
+const openAuthorityReport = () => {
+  authorityModal.hidden = false;
+  document.body.style.overflow = "hidden";
+  closeAuthorityReportButton.focus();
+};
+
+const closeAuthorityReport = () => {
+  authorityModal.hidden = true;
+  document.body.style.overflow = "";
+  authorityReportButton.focus();
+};
+
 const showQrCode = (button) => {
   const name = button.dataset.qrName;
 
@@ -338,11 +353,21 @@ ratingButtons.forEach((button) => {
 
 menuButton.addEventListener("click", openMenu);
 closeMenuButton.addEventListener("click", closeMenu);
+authorityReportButton.addEventListener("click", openAuthorityReport);
+closeAuthorityReportButton.addEventListener("click", closeAuthorityReport);
 qrButtons.forEach((button) => button.addEventListener("click", () => showQrCode(button)));
 menuModal.addEventListener("click", (event) => {
   if (event.target === menuModal) closeMenu();
 });
+authorityModal.addEventListener("click", (event) => {
+  if (event.target === authorityModal) closeAuthorityReport();
+});
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !authorityModal.hidden) {
+    closeAuthorityReport();
+    return;
+  }
+
   if (event.key !== "Escape" || menuModal.hidden) return;
 
   if (!qrView.hidden) showMenuHome();
