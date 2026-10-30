@@ -413,7 +413,7 @@ h1 {
 }
 
 .authority-dialog {
-  width: min(100%, 62rem);
+  width: min(100%, 48rem);
 }
 
 .authority-dialog__header {
@@ -422,33 +422,22 @@ h1 {
     var(--wine-dark);
 }
 
-.authority-heading {
-  display: flex;
-  min-width: 0;
-  align-items: baseline;
-  gap: clamp(0.5rem, 1.8vmin, 0.9rem);
-}
-
-.authority-heading > span {
-  flex: 0 0 auto;
-  color: #b8d6b4;
-  font-size: clamp(0.58rem, 1.5vmin, 0.75rem);
-  font-weight: 850;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+.authority-dialog__header h2 {
+  overflow: hidden;
+  font-size: clamp(1.25rem, 4.2vmin, 2.25rem);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .authority-report {
   display: grid;
   min-height: 0;
-  grid-template-columns: minmax(13rem, 0.82fr) minmax(18rem, 1.18fr);
-  grid-template-rows: minmax(0, 1fr) auto;
   gap: clamp(0.55rem, 1.8vmin, 0.9rem);
   overflow: auto;
   padding: clamp(0.6rem, 2vmin, 1rem);
 }
 
-.report-summary,
+.report-result,
 .report-findings {
   min-width: 0;
   border: 2px solid #e2d1ba;
@@ -456,20 +445,14 @@ h1 {
   background: rgba(255, 255, 255, 0.54);
 }
 
-.report-summary {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.45rem, 1.4vmin, 0.7rem);
-  padding: clamp(0.65rem, 2vmin, 1rem);
-}
-
 .report-result {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(0.65rem, 2vmin, 1rem);
-  padding-bottom: clamp(0.45rem, 1.4vmin, 0.7rem);
-  border-bottom: 1px solid #dfcfb9;
+  padding: clamp(0.65rem, 2vmin, 1rem);
+  border-color: color-mix(in srgb, var(--green) 34%, #e2d1ba);
+  background: color-mix(in srgb, var(--green) 5%, white);
 }
 
 .report-result > div {
@@ -492,32 +475,9 @@ h1 {
   line-height: 1;
 }
 
-.report-meta {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(0.25rem, 0.9vmin, 0.4rem) clamp(0.5rem, 1.6vmin, 0.8rem);
-  margin: 0;
-  font-size: clamp(0.64rem, 1.8vmin, 0.82rem);
-  line-height: 1.15;
-}
-
-.report-meta dt {
-  color: var(--muted);
-  font-weight: 750;
-}
-
-.report-meta dd {
-  margin: 0;
-  overflow: hidden;
-  font-weight: 800;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .report-stamp {
   display: inline-grid;
-  align-self: end;
-  justify-self: start;
+  justify-self: end;
   padding: clamp(0.22rem, 0.7vmin, 0.35rem) clamp(0.45rem, 1.3vmin, 0.7rem);
   border: 3px double var(--green);
   border-radius: 0.35rem;
@@ -548,7 +508,7 @@ h1 {
 
 .report-findings h3 {
   color: var(--wine-dark);
-  font-size: clamp(1.05rem, 3.3vmin, 1.55rem);
+  font-size: clamp(1.2rem, 3.8vmin, 1.8rem);
 }
 
 .findings-list {
@@ -567,7 +527,7 @@ h1 {
   gap: 0.75rem;
   padding: clamp(0.28rem, 1vmin, 0.48rem) 0;
   border-bottom: 1px solid #e4d7c5;
-  font-size: clamp(0.62rem, 1.8vmin, 0.82rem);
+  font-size: clamp(0.72rem, 2.1vmin, 0.92rem);
 }
 
 .findings-list li:last-child {
@@ -583,30 +543,6 @@ h1 {
 .findings-list strong::before {
   margin-right: 0.3em;
   content: "\2713";
-}
-
-.report-note {
-  margin: 0;
-  padding: clamp(0.4rem, 1.2vmin, 0.6rem);
-  border-left: 3px solid var(--wine);
-  color: var(--muted);
-  background: rgba(122, 18, 48, 0.06);
-  font-size: clamp(0.6rem, 1.7vmin, 0.78rem);
-  line-height: 1.25;
-}
-
-.report-note strong {
-  color: var(--wine-dark);
-}
-
-.report-disclaimer {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: var(--muted);
-  font-size: clamp(0.52rem, 1.4vmin, 0.68rem);
-  font-weight: 700;
-  letter-spacing: 0.035em;
-  text-align: center;
 }
 
 .menu-section {
@@ -876,6 +812,37 @@ h1 {
 
   .menu-section {
     padding: 0.5rem;
+  }
+
+  .authority-report {
+    gap: 0.35rem;
+    padding: 0.4rem;
+  }
+
+  .report-result {
+    gap: 0.55rem;
+    padding: 0.4rem 0.55rem;
+  }
+
+  .soft-authority-face--report {
+    width: 2.6rem;
+  }
+
+  .report-findings {
+    padding: 0.4rem 0.55rem;
+  }
+
+  .report-findings h3 {
+    font-size: 1.1rem;
+  }
+
+  .findings-list {
+    margin: 0.12rem 0 0;
+  }
+
+  .findings-list li {
+    padding: 0.18rem 0;
+    font-size: 0.66rem;
   }
 }
 
