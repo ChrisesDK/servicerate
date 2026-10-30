@@ -180,22 +180,19 @@ h1 {
 }
 
 .rating-zone {
-  position: relative;
   display: grid;
   min-width: 0;
   min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto;
   place-items: stretch;
   margin: 0;
   padding: clamp(0.45rem, 1.6vmin, 1rem);
   border: 2px solid #e7d8c4;
   border-radius: clamp(0.85rem, 2.2vmin, 1.4rem);
   background: rgba(255, 255, 255, 0.48);
-  isolation: isolate;
 }
 
 .ratings {
-  position: relative;
-  z-index: 1;
   display: grid;
   min-height: 0;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -205,39 +202,59 @@ h1 {
 }
 
 .soft-authority-badge {
-  position: absolute;
-  top: clamp(0.2rem, 0.8vmin, 0.45rem);
-  right: clamp(0.2rem, 0.8vmin, 0.45rem);
-  z-index: 2;
-  display: grid;
-  width: clamp(3.5rem, 6.5vmin, 4.75rem);
-  justify-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: clamp(0.3rem, 0.8vmin, 0.45rem);
   margin: 0;
-  padding: clamp(0.18rem, 0.5vmin, 0.32rem);
-  border: 1px solid rgba(27, 92, 61, 0.42);
-  border-radius: clamp(0.55rem, 1.25vmin, 0.8rem);
-  color: #164d34;
-  background: rgba(255, 249, 237, 0.94);
-  box-shadow: 0 0.25rem 0.8rem rgba(44, 19, 34, 0.13);
+  color: var(--muted);
+  font-size: clamp(0.62rem, 1.5vmin, 0.78rem);
+  font-weight: 750;
+  line-height: 1;
   pointer-events: none;
-  transform: translate(24%, -24%) rotate(5deg);
-  transform-origin: center;
   user-select: none;
 }
 
-.soft-authority-badge img {
+.soft-authority-face {
+  position: relative;
   display: block;
-  width: clamp(2.35rem, 4.7vmin, 3.35rem);
-  height: auto;
+  width: clamp(1.45rem, 3.8vmin, 1.9rem);
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+  border: clamp(0.1rem, 0.28vmin, 0.14rem) solid var(--green);
+  border-radius: 50%;
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 10%, var(--cream));
 }
 
-.soft-authority-badge span {
-  margin-top: -0.05rem;
-  font-size: clamp(0.4rem, 0.85vmin, 0.58rem);
-  font-weight: 850;
-  letter-spacing: -0.025em;
-  line-height: 1;
-  text-align: center;
+.soft-authority-face__eyes::before,
+.soft-authority-face__eyes::after {
+  position: absolute;
+  top: 31%;
+  width: 9%;
+  aspect-ratio: 0.78;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.soft-authority-face__eyes::before {
+  left: 27%;
+}
+
+.soft-authority-face__eyes::after {
+  right: 27%;
+}
+
+.soft-authority-face__mouth {
+  position: absolute;
+  left: 50%;
+  bottom: 24%;
+  width: 42%;
+  height: 24%;
+  border-bottom: clamp(0.1rem, 0.28vmin, 0.14rem) solid currentColor;
+  border-radius: 0 0 50% 50%;
+  transform: translateX(-50%);
 }
 
 .rating {
