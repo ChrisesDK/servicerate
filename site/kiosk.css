@@ -750,7 +750,7 @@ h1 {
   background: linear-gradient(135deg, var(--red), var(--wine) 72%);
   box-shadow: 0 0.28rem 0.7rem rgba(122, 18, 48, 0.22);
   content: "";
-  transform: rotate(-45deg);
+  transform: rotate(135deg);
 }
 
 .qr-blood-type strong {
