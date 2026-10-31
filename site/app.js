@@ -32,6 +32,7 @@ const menuHome = document.querySelector("#menu-home");
 const qrView = document.querySelector("#qr-view");
 const qrName = document.querySelector("#qr-name");
 const qrHandle = document.querySelector("#qr-handle");
+const qrBloodType = document.querySelector("#qr-blood-type");
 const qrHeading = document.querySelector("#qr-heading");
 const qrArt = document.querySelector("#qr-art");
 const qrImage = document.querySelector("#qr-image");
@@ -336,6 +337,7 @@ const showQrCode = (button) => {
 
   qrName.textContent = name;
   qrHandle.textContent = button.dataset.qrHandle;
+  qrBloodType.textContent = button.dataset.qrBloodType;
   qrImage.src = button.dataset.qrSrc;
   qrImage.alt = `${name}'s Instagram QR code`;
   activeQrMask = button.dataset.qrMask;
