@@ -232,8 +232,8 @@ h1 {
   aspect-ratio: 1;
   border: clamp(0.1rem, 0.28vmin, 0.14rem) solid var(--green);
   border-radius: 50%;
-  color: var(--green);
-  background: color-mix(in srgb, var(--green) 10%, var(--cream));
+  color: var(--cream);
+  background: var(--green);
 }
 
 .soft-authority-face__eyes::before,
@@ -269,24 +269,6 @@ h1 {
 .soft-authority-face--report {
   width: clamp(3.2rem, 12vmin, 5.4rem);
   border-width: clamp(0.18rem, 0.5vmin, 0.28rem);
-}
-
-.soft-authority-face--report::after {
-  position: absolute;
-  top: -0.35rem;
-  left: -0.35rem;
-  display: grid;
-  width: clamp(1rem, 3vmin, 1.3rem);
-  aspect-ratio: 1;
-  place-items: center;
-  border: 2px solid var(--cream);
-  border-radius: 50%;
-  color: white;
-  background: var(--wine);
-  content: "?";
-  font-size: clamp(0.62rem, 1.8vmin, 0.78rem);
-  font-weight: 900;
-  line-height: 1;
 }
 
 .rating {
@@ -426,7 +408,7 @@ h1 {
 .menu-dialog__body {
   display: grid;
   min-height: 0;
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(0.6rem, 2vmin, 1rem);
   padding: clamp(0.6rem, 2vmin, 1rem);
 }
@@ -575,15 +557,17 @@ h1 {
 .instagram-buttons {
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: clamp(0.45rem, 1.5vmin, 0.75rem);
 }
 
 .instagram-button {
   display: grid;
-  min-height: clamp(4.5rem, 20vmin, 8rem);
+  min-height: 0;
+  grid-template-columns: auto auto;
+  align-items: center;
   place-content: center;
-  gap: 0.35rem;
+  gap: clamp(0.55rem, 1.8vmin, 0.9rem);
   border: 2px solid var(--wine);
   border-radius: clamp(0.7rem, 2vmin, 1rem);
   color: white;
@@ -594,7 +578,7 @@ h1 {
 }
 
 .instagram-glyph {
-  font-size: clamp(1.8rem, 7vmin, 3rem);
+  font-size: clamp(1.7rem, 6vmin, 2.7rem);
   line-height: 0.8;
 }
 
@@ -614,7 +598,7 @@ h1 {
 .stats-list {
   display: grid;
   flex: 1;
-  align-content: center;
+  grid-template-rows: repeat(4, minmax(2.25rem, 1fr));
   gap: clamp(0.35rem, 1.25vmin, 0.65rem);
 }
 
@@ -623,8 +607,14 @@ h1 {
   grid-template-columns: minmax(5.8rem, 0.8fr) minmax(5rem, 1.35fr) 1.8rem;
   align-items: center;
   gap: clamp(0.4rem, 1.4vmin, 0.7rem);
+  padding: 0 clamp(0.15rem, 0.8vmin, 0.35rem);
+  border-bottom: 1px solid #eadcca;
   font-size: clamp(0.68rem, 2.1vmin, 0.88rem);
   font-weight: 750;
+}
+
+.stat-row:last-child {
+  border-bottom: 0;
 }
 
 .stat-row > span {
